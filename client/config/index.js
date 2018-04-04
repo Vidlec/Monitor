@@ -1,14 +1,21 @@
-const src = './client/src/js/';
-const dist = './client/dist/';
-const jsOutput = `${dist}/js/`;
+const src = './client/src';
+const dist = './client/dist';
+
+const jsOutput = `${dist}/js`;
+const jsSrc = `${src}/js`;
+
+const templatesSrc = `${src}/templates`
 
 
 module.exports = {
     clientPort: 3000,
     src,
     dist,
-    entry: `${src}index.js`,
+    entry: `${jsSrc}/index.js`,
     jsOutput,
-    appPath: `${jsOutput}/app/`,
-    vendorPath: `${jsOutput}/vendor/`
+    jsSrc,
+    templatesSrc,
+    appPath: `${jsOutput}/app`,
+    publicPath: `js/app/`,
+    vendorPath: `${jsOutput}/vendor`
 }

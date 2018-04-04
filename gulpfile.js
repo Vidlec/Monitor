@@ -1,5 +1,4 @@
 const gulp = require('gulp');
-const gutil = require('gulp-util');
 const requireDir = require('require-dir');
 
 requireDir('./client/config/gulp');

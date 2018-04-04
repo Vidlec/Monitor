@@ -18,7 +18,7 @@ const compiler = webpack(webpackConfig);
 gulp.task('serve', ['build:client'], () => {
     webpackConfig.entry.app.unshift('event-source-polyfill', 'webpack-hot-middleware/client');
     browserSync.init({
-        server: '../../dist/',
+        server: `${config.dist}`,
         port: config.clientPort,
         reloadDelay: 1000,
         middleware: [
@@ -28,7 +28,6 @@ gulp.task('serve', ['build:client'], () => {
                  * Public path is defined during the runtime, therefore it is not specified in
                  * Webpack configuration.
                  */
-                publicPath: config.appPath,
                 historyApiFallback: true,
                 /* Make sure to set {lazy: false} in order to use aggregate timout */
                 lazy: false,
@@ -58,8 +57,7 @@ gulp.task('serve', ['build:client'], () => {
             /* Otherwise run through runSequence */
             return runSequence(...tasks);
         });
-
-        watch('../../src/templates/*.html', ['copyHtml', 'reload']);
+        watch(`${config.templatesSrc}*.html`, ['copyHtml', 'reload']);
     }
 })
 

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { hot } from 'react-hot-loader'
 
 class App extends Component {
     render() {
@@ -6,16 +7,16 @@ class App extends Component {
             <React.Fragment>
                 <div>
                     <nav>
-                        <Link to="/">Home</Link>
+                        BLAH
                     </nav>
                 </div>
 
                 <div>
-                    <Route path="/" component={ <div>Oh, hi Mark!</div> }/>
+                    TEST
                 </div>
             </React.Fragment>
         );
     }
 }
 
-export default App;
+export default hot(module)(App);

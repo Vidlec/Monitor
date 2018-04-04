@@ -2,6 +2,9 @@ const path = require('path');
 const CWD = process.cwd();
 const webpack = require('webpack');
 
+const BabelMinifyPlugin = require('babel-minify-webpack-plugin');
+const WriteFilePlugin = require('write-file-webpack-plugin');
+
 const environment = require('../environment');
 
 const config = require('../index');
@@ -13,27 +16,40 @@ const DEVELOPMENT = (mode === 'development');
 
 module.exports = {
     entry: {
-      app: [config.entry],
+      app: [config.entry]
     },
     output: {
       filename: '[name].js',
-      path: path.resolve(CWD, config.appPath,)
+      publicPath: config.publicPath,
+      path: path.resolve(CWD, config.appPath)
     },
     cache: true,
-    devtool: 'source-map',
     mode,
     module: {
       rules: [
         {
           test: /\.jsx?$/,
+          include: [
+            path.resolve(CWD, config.jsSrc),
+          ],
           exclude: /node_modules/,
-          use: {
-            loader: 'babel-loader',
-            options: {
-              presets: ['env', 'react'],
-              plugins: ['syntax-dynamic-import']
+          use: [
+            {
+              loader: 'babel-loader',
+              options: {
+                cacheDirectory: true,
+                presets: ['env', 'react'],
+                plugins: ['syntax-dynamic-import']
+              }
+            },
+            {
+              loader: 'eslint-loader',
+              options: {
+                failOnError: !DEVELOPMENT,
+                cache: false
+              }
             }
-          }
+          ]
         }
       ]
     },
@@ -43,7 +59,11 @@ module.exports = {
     plugins: [
       new webpack.DllReferencePlugin({
         context: CWD,
-        manifest: path.resolve(CWD, `${config.vendorPath}${libEntry}-manifest.json`)
+        manifest: path.resolve(CWD, `${config.vendorPath}/${libEntry}-manifest.json`)
+      }),
+      new WriteFilePlugin({
+        log: false,
+        exitOnErrors: !DEVELOPMENT
       }),
       new webpack.HotModuleReplacementPlugin()
     ]

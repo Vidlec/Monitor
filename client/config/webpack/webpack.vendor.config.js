@@ -11,7 +11,6 @@ const mode = environment().type;
 
 module.exports = {
     entry: {
-      // app: ['./client/src/js/index.js'],
       vendor: Object.keys(packageJson.dependencies),
     },
     output: {
@@ -28,7 +27,7 @@ module.exports = {
     },
     plugins: [
     new webpack.DllPlugin({
-        path: path.resolve(CWD, `${config.vendorPath}[name]-manifest.json`),
+        path: path.resolve(CWD, `${config.vendorPath}/[name]-manifest.json`),
         name: '[name]'
     })
    ]
