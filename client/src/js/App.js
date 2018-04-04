@@ -7,12 +7,8 @@ class App extends Component {
             <React.Fragment>
                 <div>
                     <nav>
-                        BLAH
+                        Oh hi Mark!
                     </nav>
-                </div>
-
-                <div>
-                    TEST
                 </div>
             </React.Fragment>
         );
