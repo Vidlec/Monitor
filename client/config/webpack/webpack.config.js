@@ -16,12 +16,12 @@ const DEVELOPMENT = (mode === 'development');
 
 module.exports = {
     entry: {
-      app: [config.entry]
+      app: [config.CLIENT_ENTRY]
     },
     output: {
       filename: '[name].js',
-      publicPath: config.publicPath,
-      path: path.resolve(CWD, config.appPath)
+      publicPath: config.PUBLIC_PATH,
+      path: path.resolve(CWD, config.APP_PATH)
     },
     cache: true,
     mode,
@@ -30,7 +30,7 @@ module.exports = {
         {
           test: /\.jsx?$/,
           include: [
-            path.resolve(CWD, config.jsSrc),
+            path.resolve(CWD, config.JS_SRC),
           ],
           exclude: /node_modules/,
           use: [
@@ -59,7 +59,7 @@ module.exports = {
     plugins: [
       new webpack.DllReferencePlugin({
         context: CWD,
-        manifest: path.resolve(CWD, `${config.vendorPath}/${libEntry}-manifest.json`)
+        manifest: path.resolve(CWD, `${config.VENDOR_PATH}/${libEntry}-manifest.json`)
       }),
       new WriteFilePlugin({
         log: false,

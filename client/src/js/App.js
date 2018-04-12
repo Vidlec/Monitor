@@ -2,15 +2,21 @@ import React, { Component } from 'react';
 import { hot } from 'react-hot-loader'
 
 class App extends Component {
+    constructor() {
+        super();
+        this.test = 'sddsd';
+    }
+
+    sayHello() {
+        console.log(this.test);
+    }
+
     render() {
+        this.sayHello();
         return (
-            <React.Fragment>
-                <div>
-                    <nav>
-                        Oh hi Mark!
-                    </nav>
-                </div>
-            </React.Fragment>
+            <div>
+                {this.test}
+            </div>
         );
     }
 }

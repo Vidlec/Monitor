@@ -5,8 +5,3 @@ requireDir('./client/config/gulp');
 requireDir('./server/config/gulp');
 
 gulp.task('default', ['serve']);
-
-gulp.task('copyHtml', () => {
-  return gulp.src('./client/src/templates/*.html')
-      .pipe(gulp.dest('./client/dist'))
-})

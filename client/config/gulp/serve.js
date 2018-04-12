@@ -18,8 +18,8 @@ const compiler = webpack(webpackConfig);
 gulp.task('serve', ['build:client'], () => {
     webpackConfig.entry.app.unshift('event-source-polyfill', 'webpack-hot-middleware/client');
     browserSync.init({
-        server: `${config.dist}`,
-        port: config.clientPort,
+        server: `${config.CLIENT_DIST}`,
+        port: config.CLIENT_PORT,
         reloadDelay: 1000,
         middleware: [
             webpackDevMiddleware(compiler, {
@@ -57,7 +57,7 @@ gulp.task('serve', ['build:client'], () => {
             /* Otherwise run through runSequence */
             return runSequence(...tasks);
         });
-        watch(`${config.templatesSrc}*.html`, ['copyHtml', 'reload']);
+        watch(`${config.TEMPLATE_SRC}*.html`, ['copyHtml', 'reload']);
     }
 })
 

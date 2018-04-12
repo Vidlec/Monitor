@@ -1,5 +1,4 @@
 node_modules
 .vscode
 
-client/dist
-server/dist
+dist

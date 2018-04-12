@@ -6,7 +6,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build-client": "webpack --config ./client/config/webpack.config.js"
+    "dev": "gulp --dev",
+    "vendor": "gulp build:vendor"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

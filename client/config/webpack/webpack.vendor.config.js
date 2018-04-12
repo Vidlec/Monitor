@@ -15,7 +15,7 @@ module.exports = {
     },
     output: {
       filename: '[name].js',
-      path: path.resolve(CWD, config.vendorPath),
+      path: path.resolve(CWD, config.VENDOR_PATH),
       library: '[name]'
     },
     mode,
@@ -27,7 +27,7 @@ module.exports = {
     },
     plugins: [
     new webpack.DllPlugin({
-        path: path.resolve(CWD, `${config.vendorPath}/[name]-manifest.json`),
+        path: path.resolve(CWD, `${config.VENDOR_PATH}/[name]-manifest.json`),
         name: '[name]'
     })
    ]
