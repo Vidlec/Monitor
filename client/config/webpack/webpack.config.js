@@ -1,18 +1,13 @@
 const path = require('path');
+
 const CWD = process.cwd();
 const webpack = require('webpack');
 
-const BabelMinifyPlugin = require('babel-minify-webpack-plugin');
 const WriteFilePlugin = require('write-file-webpack-plugin');
-
-const environment = require('../environment');
-
 const config = require('../index');
 const webpackVendorConfig = require('./webpack.vendor.config');
-const libEntry = Object.keys(webpackVendorConfig.entry)[0];
 
-const mode = environment().type;
-const DEVELOPMENT = (mode === 'development');
+const libEntry = Object.keys(webpackVendorConfig.entry)[0];
 
 module.exports = {
     entry: {
@@ -24,7 +19,17 @@ module.exports = {
       path: path.resolve(CWD, config.APP_PATH)
     },
     cache: true,
-    mode,
+    mode: config.ENVIRONMENT,
+    resolve: {
+      extensions: ['.js', '.jsx'],
+      alias: {
+        '@const': path.resolve(CWD, `${config.JS_SRC}/const`),
+        '@components': path.resolve(CWD, `${config.JS_SRC}/components`),
+        '@store': path.resolve(CWD, `${config.JS_SRC}/store`),
+        '@reducers': path.resolve(CWD, `${config.JS_SRC}/store/reducers`),
+        '@utils': path.resolve(CWD, `${config.JS_SRC}/utils`)
+      },
+    },
     module: {
       rules: [
         {
@@ -38,33 +43,32 @@ module.exports = {
               loader: 'babel-loader',
               options: {
                 cacheDirectory: true,
-                presets: ['env', 'react'],
                 plugins: ['syntax-dynamic-import']
               }
             },
             {
               loader: 'eslint-loader',
               options: {
-                failOnError: !DEVELOPMENT,
-                cache: false
-              }
-            }
-          ]
-        }
-      ]
+                failOnError: !config.DEVELOPMENT,
+                cache: false,
+              },
+            },
+          ],
+        },
+      ],
     },
     optimization: {
-      occurrenceOrder: true
+      occurrenceOrder: true,
     },
     plugins: [
       new webpack.DllReferencePlugin({
         context: CWD,
-        manifest: path.resolve(CWD, `${config.VENDOR_PATH}/${libEntry}-manifest.json`)
+        manifest: path.resolve(CWD, `${config.VENDOR_PATH}/${libEntry}-manifest.json`),
       }),
       new WriteFilePlugin({
         log: false,
-        exitOnErrors: !DEVELOPMENT
+        exitOnErrors: !config.DEVELOPMENT,
       }),
-      new webpack.HotModuleReplacementPlugin()
-    ]
+      new webpack.HotModuleReplacementPlugin(),
+    ],
   };

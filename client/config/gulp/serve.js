@@ -10,12 +10,9 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 const config = require('../index');
 const webpackConfig = require('../webpack/webpack.config.js');
 
-const environment = require('../environment');
-const DEVELOPMENT = environment().type === 'development';
-
 const compiler = webpack(webpackConfig);
 
-gulp.task('serve', ['build:client'], () => {
+gulp.task('serve', ['client'], () => {
     webpackConfig.entry.app.unshift('event-source-polyfill', 'webpack-hot-middleware/client');
     browserSync.init({
         server: `${config.CLIENT_DIST}`,
@@ -39,16 +36,16 @@ gulp.task('serve', ['build:client'], () => {
                     colors: true,
                     modules: false,
                     chunks: false,
-                    chunkModules: false
-                }
+                    chunkModules: false,
+                },
             }),
             webpackHotMiddleware(compiler),
         ],
         ghostMode: false,
-        open: false
-    })
+        open: false,
+    });
 
-    if (DEVELOPMENT) {
+    if (config.DEVELOPMENT) {
         /* Declare watch tasks */
         const watch = (glob, tasks, callback) => gwatch(glob, (vinyl) => {
             /* When provided custom callback, use it with current vinyl and passed tasks */
@@ -57,8 +54,9 @@ gulp.task('serve', ['build:client'], () => {
             /* Otherwise run through runSequence */
             return runSequence(...tasks);
         });
-        watch(`${config.TEMPLATE_SRC}*.html`, ['copyHtml', 'reload']);
+        watch(`${config.TEMPLATE_SRC}*.html`, ['copy:html', 'reload']);
+        watch(`${config.CSS_SRC}`, ['styles:compile', 'reload']);
     }
-})
+});
 
 gulp.task('reload', () => browserSync.reload());

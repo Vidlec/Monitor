@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { hot } from 'react-hot-loader'
+import { hot } from 'react-hot-loader';
+
+import Test from '@components/Test';
 
 class App extends Component {
     constructor() {
         super();
-        this.test = 'sddsd';
+        this.test = 'Mark!';
     }
 
     sayHello() {
@@ -15,7 +17,8 @@ class App extends Component {
         this.sayHello();
         return (
             <div>
-                {this.test}
+                <Test />
+                { this.test }
             </div>
         );
     }
