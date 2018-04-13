@@ -54,7 +54,7 @@ gulp.task('serve', ['client'], () => {
             /* Otherwise run through runSequence */
             return runSequence(...tasks);
         });
-        watch(`${config.TEMPLATE_SRC}*.html`, ['copy:html', 'reload']);
+        watch(`${config.TEMPLATE_SRC}/*.html`, ['copy:html', 'reload']);
         watch(`${config.CSS_SRC}`, ['styles:compile', 'reload']);
     }
 });
