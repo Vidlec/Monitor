@@ -11,12 +11,12 @@ const libEntry = Object.keys(webpackVendorConfig.entry)[0];
 
 module.exports = {
     entry: {
-      app: [config.CLIENT_ENTRY]
+      app: [config.CLIENT_ENTRY],
     },
     output: {
       filename: '[name].js',
       publicPath: config.PUBLIC_PATH,
-      path: path.resolve(CWD, config.APP_PATH)
+      path: path.resolve(CWD, config.APP_PATH),
     },
     cache: true,
     mode: config.ENVIRONMENT,
@@ -27,7 +27,7 @@ module.exports = {
         '@components': path.resolve(CWD, `${config.JS_SRC}/components`),
         '@store': path.resolve(CWD, `${config.JS_SRC}/store`),
         '@reducers': path.resolve(CWD, `${config.JS_SRC}/store/reducers`),
-        '@utils': path.resolve(CWD, `${config.JS_SRC}/utils`)
+        '@utils': path.resolve(CWD, `${config.JS_SRC}/utils`),
       },
     },
     module: {

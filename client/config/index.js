@@ -1,3 +1,8 @@
+const environment = require('./environment');
+
+const ENVIRONMENT = environment().type;
+const DEVELOPMENT = ENVIRONMENT === 'development';
+
 const DIST = './dist';
 
 const CLIENT_SRC = './client/src';
@@ -14,16 +19,13 @@ const CSS_SRC = `${CLIENT_SRC}/sass/**/*.scss`;
 const CSS_OUTPUT = `${CLIENT_DIST}/css`;
 
 const TEMPLATE_SRC = `${CLIENT_SRC}/templates`;
+
 const CLIENT_PORT = 3000;
 const CLIENT_ENTRY = `${JS_SRC}/index.js`;
 const APP_PATH = `${JS_OUTPUT}/app`;
 const PUBLIC_PATH = 'js/app/';
 const VENDOR_PATH = `${JS_OUTPUT}/vendor`;
 
-const environment = require('./environment');
-
-const ENVIRONMENT = environment().type;
-const DEVELOPMENT = ENVIRONMENT === 'development';
 
 module.exports = {
     CLIENT_PORT,

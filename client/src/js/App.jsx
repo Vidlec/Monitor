@@ -1,27 +1,33 @@
 import React, { Component } from 'react';
-import { hot } from 'react-hot-loader';
+import { connect } from 'react-redux';
 
 import Test from '@components/Test';
+import { toggleHitStatus } from '@reducers/search/filter/actions';
 
 class App extends Component {
-    constructor() {
-        super();
-        this.test = 'Mark!';
-    }
+  handleToggleHitStatus = () => {
+    const { toggleHitStatus, didHeHitHer } = this.props;
+    toggleHitStatus(!didHeHitHer);
+  }
 
-    sayHello() {
-        console.log(this.test);
-    }
+  render() {
+    const { didHeHitHer } = this.props;
 
-    render() {
-        this.sayHello();
-        return (
-            <div>
-                <Test />
-                { this.test }
-            </div>
-        );
-    }
+    return (
+        <div className="container">
+            <Test />
+            <input
+              type="button"
+              className="btn btn-primary"
+              value="Toggle hit"
+              onClick={this.handleToggleHitStatus}
+            />
+            { didHeHitHer ? <p>I did hit her :(</p> : <p>I did not hit her, I did NOT!</p> }
+        </div>
+    );
+  }
 }
 
-export default hot(module)(App);
+export default connect(state => ({
+  didHeHitHer: state.getIn(['search', 'filter', 'didHeHitHer']),
+}), { toggleHitStatus })(App);
