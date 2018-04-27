@@ -3,7 +3,9 @@ const clean = require('gulp-clean');
 
 const config = require('../index');
 
-gulp.task('clean:client', () => {
+gulp.task('clean:client', ['clean:js', 'clean:css']);
+
+gulp.task('clean:js', () => {
     return gulp.src(`${config.APP_PATH}*`, { read: false })
         .pipe(clean());
 });

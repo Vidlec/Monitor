@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Test from '@components/Test';
+import { Test } from '@components';
 import { toggleHitStatus } from '@reducers/search/filter/actions';
 
 class App extends Component {

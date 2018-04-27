@@ -6,8 +6,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "build": "gulp",
     "dev": "gulp --dev",
-    "vendor": "gulp build:vendor"
+    "vendor": "gulp bundle:vendor"
   },
   "devDependencies": {
     "autoprefixer": "^8.2.0",

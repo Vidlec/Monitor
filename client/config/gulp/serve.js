@@ -12,7 +12,7 @@ const webpackConfig = require('../webpack/webpack.config.js');
 
 const compiler = webpack(webpackConfig);
 
-gulp.task('serve', ['client'], () => {
+gulp.task('serve', () => {
     webpackConfig.entry.app.unshift('event-source-polyfill', 'webpack-hot-middleware/client');
     browserSync.init({
         server: `${config.CLIENT_DIST}`,
@@ -30,7 +30,7 @@ gulp.task('serve', ['client'], () => {
                 lazy: false,
                 watchOptions: {
                     /* Wait for any other changes before bundling */
-                    aggregateTimeout: 1500
+                    aggregateTimeout: 1500,
                 },
                 stats: {
                     colors: true,

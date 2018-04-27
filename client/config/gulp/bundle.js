@@ -1,7 +1,6 @@
 const gulp = require('gulp');
 const gutil = require('gulp-util');
 const webpack = require('webpack');
-const runSequence = require('run-sequence');
 
 const webpackConfig = require('../webpack/webpack.config.js');
 const webpackConfigVendor = require('../webpack/webpack.vendor.config.js');
@@ -39,12 +38,10 @@ const bundle = (config, done) => {
     });
 };
 
-gulp.task('build:client', (done) => {
+gulp.task('bundle:client', (done) => {
     return bundle(webpackConfig, done);
 });
 
-gulp.task('build:vendor', ['clean:vendor'], (done) => {
+gulp.task('bundle:vendor', ['clean:vendor'], (done) => {
   return bundle(webpackConfigVendor, done);
 });
-
-gulp.task('client', () => runSequence('clean:client', 'clean:css', ['build:client', 'copy:html', 'styles:compile']));
