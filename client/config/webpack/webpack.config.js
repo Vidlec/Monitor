@@ -4,6 +4,7 @@ const CWD = process.cwd();
 const webpack = require('webpack');
 
 const WriteFilePlugin = require('write-file-webpack-plugin');
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const config = require('../index');
 const webpackVendorConfig = require('./webpack.vendor.config');
 
@@ -84,5 +85,6 @@ module.exports = {
         exitOnErrors: !config.DEVELOPMENT,
       }),
       new webpack.HotModuleReplacementPlugin(),
+      // new BundleAnalyzerPlugin(),
     ],
   };

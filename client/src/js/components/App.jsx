@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
 
-import { Test } from '@components';
+import { Test, Icon } from '@components';
 import { toggleHitStatus } from '@reducers/search/filter/actions';
-
-import Icon from '../../gfx/svg/eye.svg';
 
 class App extends Component {
   handleToggleHitStatus = () => {
@@ -19,7 +17,7 @@ class App extends Component {
     return (
         <div className="container">
             <Test />
-            <Icon className="icon eye"/>
+            <Icon name="eye" />
             <input
               type="button"
               className="btn btn-primary"

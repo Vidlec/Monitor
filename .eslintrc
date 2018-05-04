@@ -75,6 +75,7 @@
         "no-extra-boolean-cast": 0,
         "no-confusing-arrow": 0,
         "import/prefer-default-export": 0,
+        "import/no-dynamic-require": 0,
         "prefer-promise-reject-errors": 0,
         "no-throw-literal": 0,
 
@@ -86,6 +87,6 @@
         "react/no-direct-mutation-state": 2,
         "react/no-unescaped-entities": 0,
         "react/jsx-pascal-case": 2,
-        "react/jsx-wrap-multilines": 2 
+        "react/jsx-wrap-multilines": 2
     }
 }
