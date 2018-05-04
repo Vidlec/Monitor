@@ -1,0 +1,10 @@
+
+<svg class="nc-icon glyph" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px" height="24px" viewBox="0 0 24 24"><g>
+<rect y="15" fill="#000000" width="24" height="2"></rect>
+<rect x="2" y="11" fill="#000000" width="6" height="2"></rect>
+<path fill="#000000" d="M4,4c0,0.552,0.448,1,1,1h14.719l-1.932,7.728l1.94,0.485l2.243-8.97c0.075-0.299,0.007-0.615-0.182-0.858
+	S21.308,3,21,3H6V1c0-0.552-0.448-1-1-1H0v2h4V4z"></path>
+<rect x="4" y="7" fill="#000000" width="6" height="2"></rect>
+<circle fill="#000000" cx="5.5" cy="21.5" r="2.5"></circle>
+<circle fill="#000000" cx="20.5" cy="21.5" r="2.5"></circle>
+</g></svg>

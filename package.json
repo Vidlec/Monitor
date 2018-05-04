@@ -6,7 +6,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "gulp",
+    "prod": "gulp",
     "dev": "gulp --dev",
     "vendor": "gulp bundle:vendor"
   },
@@ -44,12 +44,14 @@
     "gulp-sass-glob": "^1.0.9",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-stylelint": "^7.0.0",
+    "gulp-svg-sprites": "^4.1.2",
     "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.8",
     "gulp-watch": "^5.0.0",
     "postcss-flexbugs-fixes": "^3.3.0",
     "pump": "^3.0.0",
     "react-hot-loader": "^4.0.0",
+    "react-svg-loader": "^2.1.0",
     "require-dir": "^1.0.0",
     "run-sequence": "^2.2.1",
     "stylelint": "^9.2.0",

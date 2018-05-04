@@ -11,6 +11,12 @@ const CLIENT_DIST = `${DIST}/client`;
 const SERVER_SRC = './server/src';
 const SERVER_DIST = `${DIST}/server`;
 
+const GFX_OUTPUT = `${CLIENT_DIST}/gfx`;
+const GFX_SRC = `${CLIENT_SRC}/gfx`;
+
+const SVG_OUTPUT = `${GFX_OUTPUT}/svg`;
+const SVG_SRC = `${GFX_SRC}/svg`;
+
 const JS_OUTPUT = `${CLIENT_DIST}/js`;
 const JS_SRC = `${CLIENT_SRC}/js`;
 
@@ -34,6 +40,10 @@ module.exports = {
     CLIENT_SRC,
     CLIENT_DIST,
     CLIENT_ENTRY,
+    GFX_OUTPUT,
+    GFX_SRC,
+    SVG_OUTPUT,
+    SVG_SRC,
     JS_OUTPUT,
     JS_SRC,
     CSS_SRC,

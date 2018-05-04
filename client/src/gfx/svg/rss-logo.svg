@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
+    <title>Fill 1</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Footer" transform="translate(-507.000000, -571.000000)" fill="#F4801F">
+            <g id="Group" transform="translate(339.000000, 516.000000)">
+                <g id="Page-1" transform="translate(168.000000, 55.000000)">
+                    <path d="M20.9013,24 C20.9013,16.869 15.1313,11.066 8.0393,11.066 L8.0393,8 C16.8223,8 23.9673,15.178 23.9673,24 L20.9013,24 Z M15.4853,23.996 C15.4853,21.992 14.7093,20.109 13.3003,18.695 C11.8953,17.281 10.0243,16.504 8.0343,16.504 L8.0343,13.437 C13.8333,13.437 18.5513,18.174 18.5513,23.996 L15.4853,23.996 Z M10.1553,23.982 C8.9823,23.982 8.0323,23.031 8.0323,21.857 C8.0323,20.686 8.9823,19.734 10.1553,19.734 C11.3293,19.734 12.2803,20.686 12.2803,21.857 C12.2803,23.031 11.3293,23.982 10.1553,23.982 L10.1553,23.982 Z M0.0003,32 L32.0003,32 L32.0003,0 L0.0003,0 L0.0003,32 Z" id="Fill-1"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

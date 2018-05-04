@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { Test } from '@components';
 import { toggleHitStatus } from '@reducers/search/filter/actions';
 
+import Icon from '../../gfx/svg/eye.svg';
+
 class App extends Component {
   handleToggleHitStatus = () => {
     const { toggleHitStatus, didHeHitHer } = this.props;
@@ -17,6 +19,7 @@ class App extends Component {
     return (
         <div className="container">
             <Test />
+            <Icon className="icon eye"/>
             <input
               type="button"
               className="btn btn-primary"

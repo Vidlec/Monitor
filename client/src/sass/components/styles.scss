@@ -2,5 +2,14 @@
  * Base
  */
 body {
-    background-color: $background;
+  background-color: $background;
+}
+
+.icon {
+  width: 35px;
+  height: 35px;
+}
+
+.eye {
+  fill: white;
 }

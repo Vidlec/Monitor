@@ -44,13 +44,27 @@ module.exports = {
               options: {
                 cacheDirectory: true,
                 plugins: ['syntax-dynamic-import']
-              }
+              },
             },
             {
               loader: 'eslint-loader',
               options: {
                 failOnError: !config.DEVELOPMENT,
                 cache: false,
+              },
+            },
+          ],
+        },
+        {
+          test: /\.svg$/,
+          use: [
+            {
+              loader: 'babel-loader',
+            },
+            {
+              loader: 'react-svg-loader',
+              options: {
+                jsx: true,
               },
             },
           ],
