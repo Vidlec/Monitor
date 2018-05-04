@@ -13,7 +13,7 @@ const webpackConfig = require('../webpack/webpack.config.js');
 const compiler = webpack(webpackConfig);
 
 gulp.task('serve', () => {
-    webpackConfig.entry.app.unshift('event-source-polyfill', 'webpack-hot-middleware/client');
+    webpackConfig.entry.app.unshift('webpack-hot-middleware/client');
     browserSync.init({
         server: `${config.CLIENT_DIST}`,
         port: config.CLIENT_PORT,

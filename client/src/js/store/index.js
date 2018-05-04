@@ -1,7 +1,18 @@
 import { createStore } from 'redux';
-import reducers from './reducers';
+import reducer from './reducers';
 
-export default createStore(
-  reducers,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-);
+export default function configureStore() {
+  const store = createStore(
+    reducer,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  );
+
+  if (module.hot) {
+    module.hot.accept('./reducers', () => {
+      store.replaceReducer(require('./reducers').default);
+    });
+  }
+
+  return store;
+}
+

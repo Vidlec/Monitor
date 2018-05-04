@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
 
 import { Test } from '@components';
@@ -28,6 +29,8 @@ class App extends Component {
   }
 }
 
+const HotApp = hot(module)(App);
+
 export default connect(state => ({
   didHeHitHer: state.getIn(['search', 'filter', 'didHeHitHer']),
-}), { toggleHitStatus })(App);
+}), { toggleHitStatus })(HotApp);

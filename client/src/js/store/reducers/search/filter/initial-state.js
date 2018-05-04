@@ -1,5 +1,6 @@
 import { fromJS } from 'immutable';
 
 export default fromJS({
-  didHeHitHer: false,
+  didHeHitHer: true,
+  shouldIncludeHidden: false,
 });

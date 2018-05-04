@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class Test extends Component {
   render() {
+    const { query } = this.props;
+
     return (
       <div>
-        Oh hi Mark!
+        { query }
       </div>
     );
   }
 }
 
-export default Test;
+export default connect(state => ({
+  query: state.getIn(['search', 'query']),
+}), {})(Test);
