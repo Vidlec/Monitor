@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
 
 import { Test, Icon } from '@components';
@@ -17,7 +16,7 @@ class App extends Component {
     return (
         <div className="container">
             <Test />
-            <Icon name="eye" />
+            <Icon name="chat" />
             <input
               type="button"
               className="btn btn-primary"
@@ -30,8 +29,6 @@ class App extends Component {
   }
 }
 
-const HotApp = hot(module)(App);
-
 export default connect(state => ({
   didHeHitHer: state.getIn(['search', 'filter', 'didHeHitHer']),
-}), { toggleHitStatus })(HotApp);
+}), { toggleHitStatus })(App);
