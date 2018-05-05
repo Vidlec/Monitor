@@ -16,6 +16,8 @@ module.exports = {
     },
     output: {
       filename: '[name].js',
+      chunkFilename: 'chunks/[name].js',
+      hotUpdateChunkFilename: 'hot-updates/[id].[hash].hot-update.js',
       publicPath: config.PUBLIC_PATH,
       path: path.resolve(CWD, config.APP_PATH),
     },
@@ -74,12 +76,14 @@ module.exports = {
     },
     optimization: {
       occurrenceOrder: true,
+      namedChunks: true,
     },
     plugins: [
       new webpack.DllReferencePlugin({
         context: CWD,
         manifest: path.resolve(CWD, `${config.VENDOR_PATH}/${libEntry}-manifest.json`),
       }),
+      new webpack.optimize.MinChunkSizePlugin({ minChunkSize: 10000 }),
       new WriteFilePlugin({
         log: false,
         exitOnErrors: !config.DEVELOPMENT,

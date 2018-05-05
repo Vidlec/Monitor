@@ -16,7 +16,7 @@ class App extends Component {
     return (
         <div className="container">
             <Test />
-            <Icon name="chat" />
+            <Icon name="eye" />
             <input
               type="button"
               className="btn btn-primary"
