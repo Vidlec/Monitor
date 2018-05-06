@@ -3,6 +3,7 @@
  */
 body {
   background-color: $background;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 .icon {
@@ -12,4 +13,8 @@ body {
 
 .eye {
   fill: white;
+}
+
+.header {
+  font-family: 'trueLies', Courier, monospace;
 }

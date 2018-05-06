@@ -17,6 +17,9 @@ const GFX_SRC = `${CLIENT_SRC}/gfx`;
 const SVG_OUTPUT = `${GFX_OUTPUT}/svg`;
 const SVG_SRC = `${GFX_SRC}/svg`;
 
+const FONTS_OUTPUT = `${CLIENT_DIST}/fonts`;
+const FONTS_SRC = `${CLIENT_SRC}/fonts`;
+
 const JS_OUTPUT = `${CLIENT_DIST}/js`;
 const JS_SRC = `${CLIENT_SRC}/js`;
 
@@ -32,27 +35,28 @@ const APP_PATH = `${JS_OUTPUT}/app`;
 const PUBLIC_PATH = 'js/app/';
 const VENDOR_PATH = `${JS_OUTPUT}/vendor`;
 
-
 module.exports = {
-    CLIENT_PORT,
-    SERVER_SRC,
-    SERVER_DIST,
-    CLIENT_SRC,
-    CLIENT_DIST,
-    CLIENT_ENTRY,
-    GFX_OUTPUT,
-    GFX_SRC,
-    SVG_OUTPUT,
-    SVG_SRC,
-    JS_OUTPUT,
-    JS_SRC,
-    CSS_SRC,
-    CSS_ENTRY,
-    CSS_OUTPUT,
-    TEMPLATE_SRC,
-    APP_PATH,
-    PUBLIC_PATH,
-    VENDOR_PATH,
-    DEVELOPMENT,
-    ENVIRONMENT,
+  CLIENT_PORT,
+  SERVER_SRC,
+  SERVER_DIST,
+  CLIENT_SRC,
+  CLIENT_DIST,
+  CLIENT_ENTRY,
+  GFX_OUTPUT,
+  GFX_SRC,
+  SVG_OUTPUT,
+  SVG_SRC,
+  JS_OUTPUT,
+  JS_SRC,
+  FONTS_OUTPUT,
+  FONTS_SRC,
+  CSS_SRC,
+  CSS_ENTRY,
+  CSS_OUTPUT,
+  TEMPLATE_SRC,
+  APP_PATH,
+  PUBLIC_PATH,
+  VENDOR_PATH,
+  DEVELOPMENT,
+  ENVIRONMENT,
 };

@@ -5,7 +5,7 @@ class Test extends Component {
   render() {
     const { query } = this.props;
 
-    return <div>{query}</div>;
+    return <div className="header">{query}</div>;
   }
 }
 
