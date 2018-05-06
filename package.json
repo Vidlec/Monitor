@@ -2,7 +2,10 @@
   "name": "mad_laboratory",
   "version": "0.0.1",
   "description": "Testing repo",
-  "repository": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Vidlec/lab"
+  },
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -12,7 +15,7 @@
     "vendor": "gulp bundle:vendor"
   },
   "lint-staged": {
-    "*.{js,json,css,md}": ["prettier --write", "git add"]
+    "*.{js,jsx,json,scss,md}": ["prettier --write", "git add"]
   },
   "devDependencies": {
     "autoprefixer": "^8.2.0",
@@ -74,8 +77,8 @@
   },
   "dependencies": {
     "immutable": "^3.8.2",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
