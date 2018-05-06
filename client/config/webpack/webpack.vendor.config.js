@@ -7,25 +7,25 @@ const config = require('../index');
 const packageJson = require('../../../package.json');
 
 module.exports = {
-    entry: {
-      vendor: Object.keys(packageJson.dependencies),
-    },
-    output: {
-      filename: '[name].js',
-      path: path.resolve(CWD, config.VENDOR_PATH),
-      library: '[name]',
-    },
-    mode: config.ENVIRONMENT,
-    optimization: {
-      occurrenceOrder: true,
-    },
-    performance: {
-      maxAssetSize: 600000,
-    },
-    plugins: [
+  entry: {
+    vendor: Object.keys(packageJson.dependencies),
+  },
+  output: {
+    filename: '[name].js',
+    path: path.resolve(CWD, config.VENDOR_PATH),
+    library: '[name]',
+  },
+  mode: 'production', // Always apply heavy optimization on vendor.js
+  optimization: {
+    occurrenceOrder: true,
+  },
+  performance: {
+    maxAssetSize: 600000,
+  },
+  plugins: [
     new webpack.DllPlugin({
-        path: path.resolve(CWD, `${config.VENDOR_PATH}/[name]-manifest.json`),
-        name: '[name]',
+      path: path.resolve(CWD, `${config.VENDOR_PATH}/[name]-manifest.json`),
+      name: '[name]',
     }),
-   ],
-  };
+  ],
+};
