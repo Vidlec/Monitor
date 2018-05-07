@@ -2,7 +2,7 @@
  * Base
  */
 body {
-  background-color: $background;
+  background-color: $brand-primary-dark;
   font-family: 'Courier New', Courier, monospace;
 }
 
@@ -17,4 +17,5 @@ body {
 
 .header {
   font-family: 'trueLies', Courier, monospace;
+  color: $brand-accent;
 }
