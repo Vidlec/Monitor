@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { hot } from 'react-hot-loader';
+
 import { Test, Icon } from '@components';
 import { toggleHitStatus } from '@reducers/search/filter/actions';
 
@@ -15,7 +17,7 @@ class App extends Component {
   };
 
   handleToggleIcon = () => {
-    this.setState({ iconName: 'cart' });
+    this.setState({ iconName: 'chat' });
   };
 
   render() {
@@ -29,7 +31,7 @@ class App extends Component {
         <input
           type="button"
           className="btn btn-primary"
-          value="Toggle hit"
+          value="Toggle hitt"
           onClick={this.handleToggleHitStatus}
         />
         <input
@@ -48,9 +50,11 @@ class App extends Component {
   }
 }
 
-export default connect(
+const ConnectedApp = connect(
   state => ({
     didHeHitHer: state.getIn(['search', 'filter', 'didHeHitHer']),
   }),
   { toggleHitStatus },
 )(App);
+
+export default hot(module)(ConnectedApp);
