@@ -1,0 +1,10 @@
+.spinner {
+  position: absolute;
+  content: '';
+  height: 20px;
+  width: 20px;
+  border-radius: 100%;
+  transition: 0.5s ease;
+  border-bottom: 4px solid $brand-accent;
+  animation: rotate 2s linear infinite;
+}

@@ -7,6 +7,9 @@ export default fromJS({
     ip: '127.0.0.1',
     severity: 5,
     message: 'Something is slightly wrong with this server',
+    status: {
+      isDeleting: false,
+    },
   },
   apqnc6jkj72: {
     id: 'apqnc6jkj72',
