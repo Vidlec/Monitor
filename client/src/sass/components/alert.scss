@@ -1,0 +1,24 @@
+.alert {
+  background-color: $brand-primary;
+  padding: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+  align-items: center;
+
+  &--deleting {
+    opacity: 0.2;
+  }
+
+  &__header {
+    background-color: $brand-primary-light;
+    text-align: center;
+    color: black;
+  }
+
+  &__delete {
+    &:hover {
+      fill: $brand-accent;
+      cursor: pointer;
+    }
+  }
+}

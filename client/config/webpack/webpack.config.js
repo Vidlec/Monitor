@@ -52,6 +52,7 @@ module.exports = {
       '@store': path.resolve(CWD, `${config.JS_SRC}/store`),
       '@reducers': path.resolve(CWD, `${config.JS_SRC}/store/reducers`),
       '@utils': path.resolve(CWD, `${config.JS_SRC}/utils`),
+      '@websockets': path.resolve(CWD, `${config.JS_SRC}/websockets`),
     },
   },
   module: {

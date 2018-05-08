@@ -6,14 +6,20 @@ import * as actions from './actions';
 
 const alerts = (state = initialState, action) => {
   switch (action.type) {
-    case actions.ADD_ALERT: {
+    case actions.ALERT_ADD: {
       const { alert } = action;
       return state.set(createId(), fromJS(alert));
     }
 
-    case actions.REMOVE_ALERT: {
+    case actions.ALERT_REMOVE: {
       return state.delete(action.id);
     }
+
+    case actions.ALERT_SET_STATUS: {
+      const { status, id } = action;
+      return state.mergeIn([id, 'status'], fromJS(status));
+    }
+
     default:
       return state;
   }

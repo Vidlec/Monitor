@@ -5,9 +5,11 @@ import { hot } from 'react-hot-loader';
 import { App } from '@components';
 import configureStore from './store';
 
+export const store = configureStore();
+
 const ReduxApp = () => {
   return (
-    <Provider store={configureStore()}>
+    <Provider store={store}>
       <App />
     </Provider>
   );

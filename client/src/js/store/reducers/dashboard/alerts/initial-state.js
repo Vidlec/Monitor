@@ -15,4 +15,25 @@ export default fromJS({
     severity: 1,
     message: 'Something is seriously wrong with this server',
   },
+  dhhsdkjd78: {
+    id: 'dhhsdkjd78',
+    server: 'some-server',
+    ip: '220.4.5.1',
+    severity: 1,
+    message: 'Something is seriously wrong with this server',
+  },
+  id737D9DSD: {
+    id: 'id737D9DSD',
+    server: 'some-server',
+    ip: '220.4.5.1',
+    severity: 1,
+    message: 'Something is seriously wrong with this server',
+  },
+  id7388983DD: {
+    id: 'id7388983DD',
+    server: 'some-server',
+    ip: '220.4.5.1',
+    severity: 1,
+    message: 'Something is seriously wrong with this server',
+  },
 });
