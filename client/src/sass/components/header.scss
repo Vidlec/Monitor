@@ -1,6 +1,7 @@
 .header {
   font-family: 'trueLies', Courier, monospace;
   color: $brand-accent;
+  background-color: $brand-secondary-dark;
 
   &__name {
     font-size: 64px;

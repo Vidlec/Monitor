@@ -7,20 +7,19 @@ class App extends Component {
     iconNames: ['eye', 'chat'],
   };
 
-  handleToggleHitStatus = () => {
-    const { toggleHitStatus, didHeHitHer } = this.props;
-    toggleHitStatus(!didHeHitHer);
-  };
-
   render() {
     const { iconNames } = this.state;
 
     return (
-      <div className="container">
+      <React.Fragment>
         <Header />
-        <Dashboard />
-        <Icon name={iconNames[0]} />
-      </div>
+        <div className="container-fluid">
+          <div className="container section">
+            <Dashboard />
+            <Icon name={iconNames[0]} />
+          </div>
+        </div>
+      </React.Fragment>
     );
   }
 }
