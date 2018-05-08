@@ -1,0 +1,17 @@
+.glowing-text {
+  animation: glowing;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes glowing-text {
+  0% {
+    text-shadow: 0px 0px 0px $brand-accent;
+  }
+  50% {
+    text-shadow: 0px 0px 5px rgb(255, 255, 255);
+  }
+  100% {
+    text-shadow: 0px 0px 0px $brand-accent;
+  }
+}

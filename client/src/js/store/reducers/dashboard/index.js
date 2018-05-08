@@ -1,9 +1,7 @@
 import { combineReducers } from 'redux-immutable';
 
-import filter from './filter';
-import query from './query';
+import alerts from './alerts';
 
 export default combineReducers({
-  query,
-  filter,
+  alerts,
 });
