@@ -6,6 +6,7 @@ const webpack = require('webpack');
 const WriteFilePlugin = require('write-file-webpack-plugin');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const config = require('../index');
+const environment = require('../../../common/config/environment');
 const webpackVendorConfig = require('./webpack.vendor.config');
 
 const libEntry = Object.keys(webpackVendorConfig.entry)[0];
@@ -23,11 +24,11 @@ const commonPlugins = [
   new webpack.optimize.MinChunkSizePlugin({ minChunkSize: 10000 }),
   new WriteFilePlugin({
     log: false,
-    exitOnErrors: !config.DEVELOPMENT,
+    exitOnErrors: !environment.DEVELOPMENT,
   }),
 ];
 
-const plugins = config.DEVELOPMENT
+const plugins = environment.DEVELOPMENT
   ? [...commonPlugins, ...devPlugins]
   : commonPlugins;
 
@@ -43,7 +44,7 @@ module.exports = {
     path: path.resolve(CWD, config.APP_PATH),
   },
   cache: true,
-  mode: config.ENVIRONMENT,
+  mode: environment.TYPE,
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
@@ -72,7 +73,7 @@ module.exports = {
           {
             loader: 'eslint-loader',
             options: {
-              failOnError: !config.DEVELOPMENT,
+              failOnError: !environment.DEVELOPMENT,
               cache: false,
             },
           },

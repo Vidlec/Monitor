@@ -1,6 +1,6 @@
 const gulp = require('gulp');
 const runSequence = require('run-sequence');
-const config = require('../index');
+const environment = require('../../../common/config/environment');
 
 const prodBundle = [
   'clean:client',
@@ -16,8 +16,8 @@ const devBundle = [
 const prodSequence = [...prodBundle];
 const devSequence = [...devBundle, ['serve']];
 
-const sequence = config.DEVELOPMENT ? devSequence : prodSequence;
+const sequence = environment.DEVELOPMENT ? devSequence : prodSequence;
 
-gulp.task('build', () => {
+gulp.task('build:client', () => {
   runSequence(...sequence);
 });

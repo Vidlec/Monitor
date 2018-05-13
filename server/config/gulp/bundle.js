@@ -3,7 +3,6 @@ const gutil = require('gulp-util');
 const webpack = require('webpack');
 
 const webpackConfig = require('../webpack/webpack.config.js');
-const webpackConfigVendor = require('../webpack/webpack.vendor.config.js');
 
 const bundle = (config, done) => {
   return webpack(config, (fatalError, stats) => {
@@ -36,10 +35,6 @@ const bundle = (config, done) => {
   });
 };
 
-gulp.task('bundle:client', done => {
+gulp.task('bundle:server', done => {
   return bundle(webpackConfig, done);
-});
-
-gulp.task('bundle:vendor', ['clean:vendor'], done => {
-  return bundle(webpackConfigVendor, done);
 });

@@ -7,7 +7,9 @@ const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 
+const environment = require('../../../common/config/environment');
 const config = require('../index');
+
 const webpackConfig = require('../webpack/webpack.config.js');
 
 const compiler = webpack(webpackConfig);
@@ -15,7 +17,7 @@ const compiler = webpack(webpackConfig);
 gulp.task('serve', () => {
   webpackConfig.entry.app.unshift('webpack-hot-middleware/client');
   browserSync.init({
-    server: `${config.CLIENT_DIST}`,
+    server: `${config.DIST}`,
     port: config.CLIENT_PORT,
     reloadDelay: 1000,
     middleware: [
@@ -45,7 +47,7 @@ gulp.task('serve', () => {
     open: false,
   });
 
-  if (config.DEVELOPMENT) {
+  if (environment.DEVELOPMENT) {
     /* Declare watch tasks */
     const watch = (glob, tasks, callback) =>
       gwatch(glob, vinyl => {
