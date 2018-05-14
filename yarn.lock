@@ -2168,6 +2168,12 @@ caseless@~0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
 
+cassandra-driver@^3.5.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/cassandra-driver/-/cassandra-driver-3.5.0.tgz#56848aa4dba8d68b5be2e7d47cd347597465e6a6"
+  dependencies:
+    long "^2.2.0"
+
 ccount@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/ccount/-/ccount-1.0.3.tgz#f1cec43f332e2ea5a569fd46f9f5bde4e6102aff"
@@ -6360,6 +6366,10 @@ loglevelnext@^1.0.1:
   dependencies:
     es6-symbol "^3.1.1"
     object.assign "^4.1.0"
+
+long@^2.2.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/long/-/long-2.4.0.tgz#9fa180bb1d9500cdc29c4156766a1995e1f4524f"
 
 long@^3.2.0:
   version "3.2.0"
