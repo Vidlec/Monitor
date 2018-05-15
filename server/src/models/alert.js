@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-export const schema = mongoose.schema({
+export const schema = mongoose.Schema({
   priority: Number,
   count: Number,
   identifier: String,

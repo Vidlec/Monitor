@@ -13,6 +13,13 @@ module.exports = {
     path: path.resolve(CWD, config.DIST),
     filename: 'backend.js',
   },
+  resolve: {
+    extensions: ['.js'],
+    alias: {
+      '@services': path.resolve(CWD, `${config.SRC}/services`),
+      '@models': path.resolve(CWD, `${config.SRC}/models`),
+    },
+  },
   module: {
     rules: [
       {
