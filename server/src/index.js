@@ -1,26 +1,13 @@
 import express from 'express';
-import cassandra from 'cassandra-driver';
+import mongoose from 'mongoose';
+import { Alert } from './models';
 
-const client = new cassandra.Client({
-  contactPoints: ['127.0.0.1'],
+mongoose.connect('mongodb://127.0.0.1/test');
+
+const alert = new Alert({
+  name: 'Zildjian',
 });
-
-client
-  .connect()
-  .then(() => {
-    console.log(
-      'Connected to cluster with %d host(s): %j',
-      client.hosts.length,
-      client.hosts.keys(),
-    );
-    console.log('Keyspaces: %j', Object.keys(client.metadata.keyspaces));
-    console.log('Shutting down');
-    return client.shutdown();
-  })
-  .catch(err => {
-    console.error('There was an error when connecting', err);
-    return client.shutdown();
-  });
+alert.save().then(() => console.log('meow'));
 
 const app = express();
 
