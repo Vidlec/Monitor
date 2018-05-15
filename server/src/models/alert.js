@@ -1,8 +1,10 @@
 import mongoose from 'mongoose';
 
-export const schema = mongoose.Schema({
+const Schema = mongoose.Schema;
+
+export const schema = Schema({
   priority: Number,
-  count: Number,
+  count: { type: Number, default: 1 },
   identifier: String,
   message: String,
   errorValue: String,
@@ -21,23 +23,11 @@ export const schema = mongoose.Schema({
   status: String,
   acknowledged: {
     status: Boolean,
-    by: String,
+    by: { type: Schema.Types.ObjectId, ref: 'User' },
     date: Date,
   },
   groups: [String],
-  comments: [
-    {
-      user: String,
-      message: String,
-      date: Date,
-    },
-  ],
-  tickets: [
-    {
-      number: Number,
-      status: String,
-    },
-  ],
+  comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
 });
 
 export default mongoose.model('Alert', schema);

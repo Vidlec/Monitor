@@ -1,6 +1,6 @@
-import { getAlert, getAlerts } from '@services';
+import { getAlert, getAlerts, deduplicateAlert } from '@services';
 
-export const alert = (req, res, next) => {
+export const get = (req, res, next) => {
   const {
     params: { id },
   } = req;
@@ -9,9 +9,16 @@ export const alert = (req, res, next) => {
     .catch(next);
 };
 
-export const alerts = (req, res, next) => {
-  const { body: params } = req;
-  getAlerts(params)
+export const post = (req, res, next) => {
+  const { body: props } = req;
+  deduplicateAlert(props)
+    .then(alert => res.json(alert))
+    .catch(next);
+};
+
+export const getAll = (req, res, next) => {
+  const { body: props } = req;
+  getAlerts(props)
     .then(alert => res.json(alert))
     .catch(next);
 };

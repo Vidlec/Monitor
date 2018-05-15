@@ -3,7 +3,8 @@ import { alertsController } from '../controllers';
 
 const router = express.Router();
 
-router.get('/:id', alertsController.alert);
-router.get('/', alertsController.alerts);
+router.get('/:id', alertsController.get);
+router.post('/', alertsController.post);
+router.get('/', alertsController.getAll);
 
 export default router;
