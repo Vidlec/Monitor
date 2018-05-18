@@ -1,17 +1,11 @@
 import { Comment } from '@models';
 
 export const getComment = param => {
-  return Comment.findOne(param)
-    .populate('user', '-comments')
-    .populate('alert', '-comments')
-    .exec();
+  return Comment.findOne(param).exec();
 };
 
 export const getComments = params => {
-  return Comment.find(params)
-    .populate('user', '-comments')
-    .populate('alert', '-comments')
-    .exec();
+  return Comment.find(params).exec();
 };
 
 export const addComment = params => {
