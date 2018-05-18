@@ -1,4 +1,5 @@
 import express from 'express';
+import { usersController } from '../controllers';
 
 const router = express.Router();
 
@@ -7,15 +8,15 @@ const fakeController = (req, res, next) => {
 };
 
 // Single user
-router.get('/:id', fakeController);
+router.get('/:id', usersController.get);
 router.put('/:id', fakeController);
 router.patch('/:id', fakeController);
 router.delete('/:id', fakeController);
 
 // Users
-router.get('/', fakeController);
+router.get('/', usersController.getAll);
 router.put('/', fakeController);
-router.post('/', fakeController);
+router.post('/', usersController.add);
 router.delete('/', fakeController);
 
 export default router;
