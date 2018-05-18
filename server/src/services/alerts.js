@@ -5,7 +5,9 @@ export const getAlert = param => {
 };
 
 export const getAlerts = params => {
-  return Alert.find(params).exec();
+  return Alert.find(params)
+    .populate('comments')
+    .exec();
 };
 
 export const saveAlert = params => {
@@ -22,6 +24,7 @@ export const deduplicateAlert = props => {
   return getAlert({ identifier: props.identifier }).then(alert => {
     if (alert) {
       props.count = alert.count + 1;
+      props.lastOccurence = new Date();
       return updateAlert({ alert, props });
     }
     return saveAlert(props);
