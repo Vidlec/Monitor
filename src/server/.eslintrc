@@ -1,6 +1,5 @@
 {
   "env": {
-    "browser": true,
     "es6": true
   },
   "extends": ["airbnb-base"],
@@ -9,8 +8,7 @@
     "ecmaVersion": 7,
     "ecmaFeatures": {
       "modules": true,
-      "classes": true,
-      "jsx": true
+      "classes": true
     }
   },
   "parser": "babel-eslint",
@@ -18,7 +16,7 @@
   "settings": {
     "import/resolver": {
       "webpack": {
-        "config": "./client/config/webpack/webpack.config.js"
+        "config": "./config/server/webpack/webpack.config.js"
       }
     }
   },

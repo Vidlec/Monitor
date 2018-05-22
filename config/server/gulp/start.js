@@ -5,7 +5,7 @@ const runSequence = require('run-sequence');
 const nodemon = require('gulp-nodemon');
 
 const config = require('../index');
-const environment = require('../../../common/config/environment');
+const environment = require('../../common/environment');
 
 gulp.task('start:server', callback => {
   if (environment.DEVELOPMENT) {

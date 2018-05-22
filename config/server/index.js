@@ -1,4 +1,4 @@
-const SRC = './server/src';
+const SRC = './src/server';
 const DIST = './dist/server';
 
 module.exports = {

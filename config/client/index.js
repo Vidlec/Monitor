@@ -1,8 +1,5 @@
-const SRC = './client/src';
+const SRC = './src/client';
 const DIST = './dist/client';
-
-const SERVER_SRC = './server/src';
-const SERVER_DIST = `${DIST}/server`;
 
 const GFX_OUTPUT = `${DIST}/gfx`;
 const GFX_SRC = `${SRC}/gfx`;
@@ -32,8 +29,6 @@ module.exports = {
   SRC,
   DIST,
   CLIENT_PORT,
-  SERVER_SRC,
-  SERVER_DIST,
   CLIENT_ENTRY,
   GFX_OUTPUT,
   GFX_SRC,

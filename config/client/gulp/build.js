@@ -1,6 +1,6 @@
 const gulp = require('gulp');
 const runSequence = require('run-sequence');
-const environment = require('../../../common/config/environment');
+const environment = require('../../common/environment');
 
 const prodBundle = [
   'clean:client',

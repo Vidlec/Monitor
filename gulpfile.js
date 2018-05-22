@@ -1,8 +1,8 @@
 const gulp = require('gulp');
 const requireDir = require('require-dir');
 
-requireDir('./client/config/gulp');
-requireDir('./server/config/gulp');
+requireDir('./config/client/gulp');
+requireDir('./config/server/gulp');
 
 gulp.task('client', ['build:client']);
 gulp.task('server', ['build:server']);

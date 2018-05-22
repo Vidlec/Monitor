@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const config = require('../index');
-const environment = require('../../../common/config/environment');
+const environment = require('../../common/environment');
 
 const CWD = process.cwd();
 

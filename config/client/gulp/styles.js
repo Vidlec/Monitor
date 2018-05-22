@@ -10,7 +10,7 @@ const sass = require('gulp-sass');
 const postcss = require('gulp-postcss');
 
 const config = require('../index');
-const environment = require('../../../common/config/environment');
+const environment = require('../../common/environment');
 
 /* Lint */
 gulp.task('styles:lint', () => {

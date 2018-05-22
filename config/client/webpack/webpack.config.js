@@ -6,7 +6,7 @@ const webpack = require('webpack');
 const WriteFilePlugin = require('write-file-webpack-plugin');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const config = require('../index');
-const environment = require('../../../common/config/environment');
+const environment = require('../../common/environment');
 const webpackVendorConfig = require('./webpack.vendor.config');
 
 const libEntry = Object.keys(webpackVendorConfig.entry)[0];
