@@ -18,7 +18,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use('/api', restRouter);
-app.use('/graphql', graphqlExpress({ schema, tracing: true }));
+app.use('/graphql', graphqlExpress({ schema }));
 app.get('/', (req, res) => res.send('Hello World!!!'));
 app.get('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 

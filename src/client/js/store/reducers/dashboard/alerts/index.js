@@ -15,10 +15,6 @@ const alerts = (state = initialState, action) => {
       return state.delete(action.id);
     }
 
-    case actions.ALERT_CLEAR: {
-      return state.delete(action.id);
-    }
-
     case actions.ALERT_SET_STATUS: {
       const { status, id } = action;
       return state.mergeIn([id, 'status'], fromJS(status));

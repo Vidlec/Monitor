@@ -1,0 +1,13 @@
+type User {
+  userName: String!
+  password: String
+  firstName: String!
+  lastName: String!
+  _id: String!
+  comments: [Comment]
+}
+
+extend type Query {
+  users: [User]
+  user(id: String!): User!
+}

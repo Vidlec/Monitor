@@ -43,6 +43,16 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.(graphql|gql)$/,
+        include: [path.resolve(CWD, config.SRC)],
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'graphql-tag/loader',
+          },
+        ],
+      },
     ],
   },
   plugins: [new webpack.HotModuleReplacementPlugin()],

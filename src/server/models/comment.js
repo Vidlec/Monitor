@@ -3,8 +3,8 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 export const schema = Schema({
-  user: { type: Schema.Types.ObjectId, ref: 'User' },
-  alert: { type: Schema.Types.ObjectId, ref: 'Alert' },
+  userId: { type: Schema.Types.ObjectId },
+  alertId: { type: Schema.Types.ObjectId },
   message: String,
   date: { type: Date, default: new Date() },
 });

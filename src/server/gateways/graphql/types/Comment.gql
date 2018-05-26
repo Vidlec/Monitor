@@ -1,0 +1,11 @@
+type Comment {
+  message: String!
+  _id: String!
+  userId: String!
+  user: User!
+}
+
+extend type Query {
+  comments: [Comment]
+  comment(id: String!): Comment!
+}
