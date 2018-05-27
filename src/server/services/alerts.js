@@ -5,9 +5,7 @@ export const getAlert = param => {
 };
 
 export const getAlerts = params => {
-  return Alert.find(params)
-    .populate('comments')
-    .exec();
+  return Alert.find(params).exec();
 };
 
 export const saveAlert = params => {

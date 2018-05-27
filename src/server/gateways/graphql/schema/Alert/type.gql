@@ -1,0 +1,27 @@
+type Alert {
+  priority: Int!
+  count: Int!
+  identifier: String!
+  message: String
+  host: String
+  hostIp: String
+  country: String
+  type: String
+  tool: String
+  key: String
+  firstOccurence: String
+  lastOccurence: String
+  rules: String
+  status: String
+  _id: String!
+  isAcknowledged: Boolean!
+  acknowledgedById: String
+  acknowledgedBy: User
+  comments: [Comment]
+  groups: [String]
+}
+
+extend type Query {
+  alerts: [Alert]
+  alert(id: String!): Alert!
+}

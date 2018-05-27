@@ -5,6 +5,7 @@ type User {
   lastName: String!
   _id: String!
   comments: [Comment]
+  acknowledgedAlerts: [Alert]
 }
 
 extend type Query {
