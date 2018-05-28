@@ -10,8 +10,12 @@
   "private": true,
   "scripts": {
     "precommit": "lint-staged",
-    "prod": "gulp client",
-    "dev": "gulp client --dev",
+    "client:prod": "gulp client",
+    "client:dev": "gulp client --dev",
+    "server:prod": "gulp server",
+    "server:dev": "gulp server --dev",
+    "prod": "gulp",
+    "dev": "gulp --dev",
     "vendor": "gulp bundle:vendor"
   },
   "lint-staged": {

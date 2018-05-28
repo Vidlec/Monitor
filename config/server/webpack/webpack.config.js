@@ -13,6 +13,7 @@ module.exports = {
     path: path.resolve(CWD, config.DIST),
     filename: 'backend.js',
   },
+  devtool: environment.DEVELOPMENT ? 'source-map' : undefined,
   resolve: {
     extensions: ['.js'],
     alias: {

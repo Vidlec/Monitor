@@ -12,6 +12,7 @@ gulp.task('start:server', callback => {
     nodemon({
       script: `${config.DIST}/backend.js`,
       watch: config.DIST,
+      exec: 'node --inspect',
       env: { NODE_ENV: environment.TYPE },
     });
 
