@@ -1,4 +1,4 @@
-import { getComment, getComments, addComment } from '@services';
+import { getComment, getComments, addComment } from '@services/mongo';
 
 export const get = (req, res, next) => {
   const {

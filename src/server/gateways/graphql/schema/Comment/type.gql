@@ -7,5 +7,5 @@ type Comment {
 
 extend type Query {
   comments: [Comment]
-  comment(id: String!): Comment!
+  comment(id: String!): Comment
 }

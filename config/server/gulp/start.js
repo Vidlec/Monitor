@@ -10,9 +10,8 @@ const environment = require('../../common/environment');
 gulp.task('start:server', callback => {
   if (environment.DEVELOPMENT) {
     nodemon({
-      script: `${config.DIST}/backend.js`,
+      script: `${config.DIST}/main.js`,
       watch: config.DIST,
-      exec: 'node --inspect',
       env: { NODE_ENV: environment.TYPE },
     });
 

@@ -13,3 +13,10 @@ $brand-accent-light: lighten($brand-accent, 10%);
 $grey: #a5b1c2;
 $grey-dark: darken($grey, 10%);
 $grey-light: lighten($grey, 10%);
+
+// severities
+$critical: #b32d3a;
+$major: #bb752c;
+$minor: #ffd507;
+$info: #00a8e8;
+$ok: #32ab00;

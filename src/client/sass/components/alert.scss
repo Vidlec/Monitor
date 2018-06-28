@@ -1,6 +1,5 @@
 .alert {
   background-color: $brand-primary;
-  padding: 5px;
   margin-bottom: 5px;
   text-align: center;
   align-items: center;
@@ -14,6 +13,34 @@
     background-color: $brand-primary-light;
     text-align: center;
     color: black;
+  }
+
+  &__severity {
+    align-self: stretch;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+
+    &-1 {
+      background-color: $critical;
+    }
+
+    &-2 {
+      background-color: $major;
+    }
+
+    &-3 {
+      background-color: $minor;
+      color: black;
+    }
+
+    &-4 {
+      background-color: $info;
+    }
+
+    &-5 {
+      background-color: $ok;
+    }
   }
 
   &__delete {

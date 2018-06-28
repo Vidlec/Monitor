@@ -1,16 +1,3 @@
-import gql from 'graphql-tag';
-
-export const types = gql`
-  type Query {
-    users: [User]
-  }
-
-  type User {
-    _id: ID
-    userName: String
-  }
-`;
-
 export const resolvers = {
   Query: {
     users: (root, args, context) => {

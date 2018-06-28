@@ -23,5 +23,5 @@ type Alert {
 
 extend type Query {
   alerts: [Alert]
-  alert(id: String!): Alert!
+  alert(id: String!): Alert
 }

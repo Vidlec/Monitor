@@ -1,9 +1,9 @@
-import { getAlerts, getAlert, getComments, getUser } from '@services';
+import { getAlerts, getAlert, getComments, getUser } from '@services/mongo';
 
 export default {
   Query: {
-    alerts: () => getAlerts(),
-    alert: (root, args, context) => getAlert(),
+    alerts: getAlerts,
+    alert: (_, args, __) => getAlert({ _id: args.id }),
   },
   Alert: {
     comments: alert => getComments({ alertId: alert._id.toString() }),

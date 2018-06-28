@@ -1,14 +1,14 @@
 import fs from 'fs';
+import { fork } from 'child_process';
 
 import 'babel-polyfill';
 import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import spdy from 'spdy';
-import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 
 import restRouter from './gateways/rest/routes';
-import { schema } from './gateways/graphql';
+import { LIFE_CYCLE, DATABASE } from './const/messageTypes';
 
 const CWD = process.cwd();
 
@@ -18,10 +18,8 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use('/api', restRouter);
-app.use('/graphql', graphqlExpress({ schema }));
-app.get('/', (req, res) => res.send('Hello World!!!'));
-app.get('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
+// Load TLS certificates and keys
 const options = {
   key: fs.readFileSync(`${CWD}/config/common/cert/server.key`),
   cert: fs.readFileSync(`${CWD}/config/common/cert/server.crt`),
@@ -30,3 +28,35 @@ const options = {
 spdy
   .createServer(options, app)
   .listen(3002, () => console.log('Example app listening on port 3002!'));
+
+const handleForkLifecycle = data => {
+  console.log(data);
+};
+
+const handleDbManipulation = data => {
+  console.log(data);
+};
+
+function handleForkMessage(message) {
+  switch (message.type) {
+    case LIFE_CYCLE:
+      handleForkLifecycle(message);
+    case DATABASE:
+      handleDbManipulation(message);
+  }
+}
+
+const gateways = [
+  { name: 'test1', path: './src/server/test.js' },
+  { name: 'test2', path: './src/server/test2.js' },
+];
+
+export const forks = gateways.map(gateway => ({
+  name: gateway.name,
+  fork: fork(gateway.path, [gateway.name]),
+}));
+
+forks.forEach(({ fork }) => {
+  fork.on('message', handleForkMessage);
+  fork.send({ hello: 'world' });
+});

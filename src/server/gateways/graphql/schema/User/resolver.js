@@ -1,13 +1,12 @@
-import { getComments, getUser, getUsers, getAlerts } from '@services';
+import { getComments, getUser, getUsers, getAlerts } from '@services/mongo';
 
 export default {
   Query: {
-    users: () => getUsers(),
-    user: (root, args, context) => getUser({ _id: args.id }),
+    users: getUsers,
+    user: (_, args, __) => getUser({ _id: args.id }),
   },
   User: {
     comments: user => getComments({ userId: user._id.toString() }),
-    password: () => 'no pasword!',
     acknowledgedAlerts: user =>
       getAlerts({ acknowledgedById: user._id.toString() }),
   },

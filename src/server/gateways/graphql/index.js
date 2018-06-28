@@ -1,13 +1,31 @@
-import { makeExecutableSchema } from 'graphql-tools';
+import fs from 'fs';
+import 'babel-polyfill';
+import express from 'express';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import spdy from 'spdy';
+import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 
-import { QueryType } from './schema/Query';
-import { UserType } from './schema/User';
-import { CommentType } from './schema/Comment';
-import { AlertType } from './schema/Alert';
+import schema from './schema';
 
-import resolvers from './resolvers';
+const CWD = process.cwd();
 
-export const schema = makeExecutableSchema({
-  typeDefs: [QueryType, UserType, CommentType, AlertType],
-  resolvers,
-});
+mongoose.connect('mongodb://127.0.0.1/test');
+
+const app = express();
+
+app.use(bodyParser.json());
+
+// gql middleware
+app.use('/graphql', graphqlExpress({ schema }));
+app.get('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
+
+// Load TLS certificates and keys
+const options = {
+  key: fs.readFileSync(`${CWD}/config/common/cert/server.key`),
+  cert: fs.readFileSync(`${CWD}/config/common/cert/server.crt`),
+};
+
+spdy
+  .createServer(options, app)
+  .listen(3003, () => console.log('Example app listening on port 3002!'));

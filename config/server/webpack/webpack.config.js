@@ -6,12 +6,12 @@ const environment = require('../../common/environment');
 const CWD = process.cwd();
 
 module.exports = {
-  entry: config.SRC,
+  entry: { main: config.SRC, graphql: `${config.SRC}/gateways/graphql` },
   target: 'node',
   mode: environment.TYPE,
   output: {
     path: path.resolve(CWD, config.DIST),
-    filename: 'backend.js',
+    filename: '[name].js',
   },
   devtool: environment.DEVELOPMENT ? 'source-map' : undefined,
   resolve: {
@@ -32,7 +32,7 @@ module.exports = {
             loader: 'babel-loader',
             options: {
               cacheDirectory: true,
-              plugins: ['syntax-dynamic-import'],
+              plugins: ['syntax-dynamic-import', 'transform-decorators-legacy'],
             },
           },
           {

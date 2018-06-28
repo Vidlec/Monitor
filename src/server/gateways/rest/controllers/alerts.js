@@ -1,4 +1,4 @@
-import { getAlert, getAlerts, deduplicateAlert } from '@services';
+import { getAlert, getAlerts, deduplicateAlert } from '@services/mongo';
 
 export const get = (req, res, next) => {
   const {
