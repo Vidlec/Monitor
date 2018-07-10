@@ -6,7 +6,11 @@ const environment = require('../../common/environment');
 const CWD = process.cwd();
 
 module.exports = {
-  entry: { main: config.SRC, graphql: `${config.SRC}/gateways/graphql` },
+  entry: {
+    main: config.SRC,
+    test: `${config.SRC}/test`,
+    test2: `${config.SRC}/test2`,
+  },
   target: 'node',
   mode: environment.TYPE,
   output: {
