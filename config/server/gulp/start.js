@@ -28,7 +28,7 @@ gulp.task('start:server', callback => {
       });
     watch(config.SRC, ['clean:server', 'bundle:server']);
   } else {
-    return exec(`node ${config.DIST}/backend.js`, (err, stdout, stderr) => {
+    return exec(`node ${config.DIST}/main.js`, (err, stdout, stderr) => {
       console.log(stdout);
       console.log(stderr);
       return callback(err);

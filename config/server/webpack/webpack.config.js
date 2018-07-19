@@ -8,8 +8,8 @@ const CWD = process.cwd();
 module.exports = {
   entry: {
     main: config.SRC,
-    test: `${config.SRC}/test`,
-    test2: `${config.SRC}/test2`,
+    rulesWorker: `${config.SRC}/workers/rules`,
+    databaseWorker: ['babel-polyfill', `${config.SRC}/workers/database`],
   },
   target: 'node',
   mode: environment.TYPE,
@@ -17,7 +17,6 @@ module.exports = {
     path: path.resolve(CWD, config.DIST),
     filename: '[name].js',
   },
-  devtool: environment.DEVELOPMENT ? 'source-map' : undefined,
   resolve: {
     extensions: ['.js'],
     alias: {

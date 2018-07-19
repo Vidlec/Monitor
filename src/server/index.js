@@ -28,4 +28,4 @@ spdy
   .createServer(options, app)
   .listen(3002, () => console.log('Example app listening on port 3002!'));
 
-initGateways();
+// initGateways();
