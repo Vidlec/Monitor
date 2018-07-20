@@ -1,4 +1,4 @@
-import { getComment, getComments, getUser } from '@services/mongo';
+import { getComment, getComments, getUser } from '@services/connectors/mongo';
 
 export default {
   Query: {

@@ -1,4 +1,4 @@
-import { getUser, getUsers, addUser } from '@services/mongo';
+import { getUser, getUsers, addUser } from '@services/connectors/mongo';
 import { populateComments } from '../utils';
 
 export const get = (req, res, next) => {

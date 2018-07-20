@@ -10,6 +10,7 @@ module.exports = {
     main: config.SRC,
     rulesWorker: `${config.SRC}/workers/rules`,
     databaseWorker: ['babel-polyfill', `${config.SRC}/workers/database`],
+    dbTask: `${config.SRC}/dbTask.js`,
   },
   target: 'node',
   mode: environment.TYPE,

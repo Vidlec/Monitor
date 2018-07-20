@@ -1,4 +1,8 @@
-import { getAlert, getAlerts, deduplicateAlert } from '@services/mongo';
+import {
+  getAlert,
+  getAlerts,
+  deduplicateAlert,
+} from '@services/connectors/mongo';
 
 export const get = (req, res, next) => {
   const {

@@ -7,7 +7,6 @@ import mongoose from 'mongoose';
 import spdy from 'spdy';
 
 import restRouter from './gateways/rest/routes';
-import { initGateways } from './services/cluster';
 
 const CWD = process.cwd();
 
