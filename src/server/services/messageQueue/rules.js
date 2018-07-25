@@ -1,12 +1,9 @@
 const mq = require('amqplib/callback_api');
 const chalk = require('chalk');
 
-// Load rules from FS
-// Wait for rules requests
-// Provide rules
-
-const data = { name: 'test' };
-const rules = { test: 'const { name } = data; { name: name + 1 };' };
+const rules = {
+  test: '{ identifier: "some test", message: "blah" }',
+};
 
 function handleMqConnection(error, connection) {
   connection.createChannel((error, channel) => {

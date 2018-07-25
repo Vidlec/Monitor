@@ -4,4 +4,5 @@ export default {
   },
   rulesWorker: {},
   gateways: {},
+  rulesFolder: './rules',
 };

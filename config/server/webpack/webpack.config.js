@@ -25,6 +25,9 @@ module.exports = {
       '@models': path.resolve(CWD, `${config.SRC}/models`),
     },
   },
+  externals: {
+    vm2: "require('vm2')",
+  },
   module: {
     rules: [
       {

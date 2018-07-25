@@ -1,5 +1,5 @@
 export function toObject(data) {
-  return JSON.parse(data);
+  return JSON.parse(data.toString());
 }
 
 export function toBuffer(data) {

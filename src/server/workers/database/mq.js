@@ -13,6 +13,7 @@ function handleMqConnection(error, connection) {
     channel.consume(queueName, message => {
       const task = toObject(message.content);
       console.log(chalk.green('[✓] Recieved database task'));
+      console.log(task);
 
       handleDatabaseTask(task)
         .then(() => channel.ack(message))
