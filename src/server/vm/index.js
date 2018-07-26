@@ -1,7 +1,7 @@
 import { NodeVM } from 'vm2';
 
 // TODO: Add error handling on exectution
-export function executeRule({ script }, data) {
+export function executeScript({ script }, data) {
   return script(data);
 }
 
@@ -10,10 +10,10 @@ export function executeRule({ script }, data) {
   This has added benefit of fast future exectution
   TODO: Add error handling on compile
 */
-export function compileRules(rules) {
+export function compileScripts(scripts) {
   const vm = new NodeVM();
 
-  return rules.map(({ name, code }) => {
+  return scripts.map(({ name, code }) => {
     return {
       name,
       script: vm.run(code),

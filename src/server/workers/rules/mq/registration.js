@@ -1,27 +1,16 @@
 import chalk from 'chalk';
-import { awaitTasks } from './tasks';
+import { consumeRegistration } from './consume';
+import { publishRegistration } from './publish';
 
-function onRegistration(message, channel) {
-  console.log(chalk.green('[✓] Recieved rules'));
-
-  const rules = JSON.parse(message.content);
-  channel.ack(message);
-
-  awaitTasks({ rules, channel });
-}
-
-export function register(error, { queue }, channel) {
+export function register(error, channel) {
   const correlationId = 'there will be some random string';
 
-  // Listen for rules
-  console.log(chalk.blue('[?] Registering and requesting rules'));
-  channel.consume(queue, message => onRegistration(message, channel), {
-    noAck: false,
-  });
+  channel.assertQueue('', { exclusive: true }, (err, { queue: queueName }) => {
+    // Listen for successful registration
+    console.log(chalk.blue('[?] Registering and requesting rules'));
+    consumeRegistration(queueName, channel);
 
-  // Request rules
-  channel.sendToQueue('registration_queue', Buffer.from('rules'), {
-    correlationId,
-    replyTo: queue,
+    // Request registration
+    publishRegistration({ channel, correlationId, replyTo: queueName });
   });
 }
