@@ -7,7 +7,7 @@ const rules = {
 
 function handleMqConnection(error, connection) {
   connection.createChannel((error, channel) => {
-    const queueName = 'registration_queue';
+    const queueName = 'REGISTRATION_QUEUE';
     channel.assertQueue(queueName, { durable: false });
     console.log(chalk.blue('[...] Awaiting registration requests'));
     channel.consume(queueName, message => {

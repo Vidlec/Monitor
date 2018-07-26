@@ -1,8 +1,8 @@
 import chalk from 'chalk';
 
-import { replyTo } from '../publish';
-import { executeScript } from '../../../../vm';
-import { toObject } from '../../../../utils/mqData';
+import { replyTo } from '@services/mq';
+import { executeScript } from '@services/vm';
+import { toObject } from '@utils/mqData';
 
 /* This handler handles running rule against incoming data */
 export function handleRuleTask(message, channel, rules) {

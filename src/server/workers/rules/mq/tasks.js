@@ -1,6 +1,6 @@
 import chalk from 'chalk';
-import dbTypes from '../../../const/databaseTypes';
-import { toBuffer } from '../../../utils/mqData';
+import dbTypes from '@const/databaseTypes';
+import { toBuffer } from '@utils/mqData';
 
 export function sendDbTask(data, channel) {
   channel.assertQueue('database_queue', { exclusive: false, durable: false });

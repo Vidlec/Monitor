@@ -1,17 +1,10 @@
-import { connect } from './dbHandler';
-import { listenForTasks } from './mq';
+import { mqInit } from '@services/mq';
+import { consumeDatabaseTasks } from './mq/consume';
+import createDbHandler from './dbHandler';
 
-async function init() {
-  /* Several things need to be done:
-     0: TODO: Get / Read Config
-     1: Connect to respective database
-     2: Connect to MQ
-  */
-
-  // Connect to DB
-  await connect();
-  // Connect to MQ
-  listenForTasks();
+async function onRegistrationSuccess({ message, channel }) {
+  const dbHandler = await createDbHandler('mongo'); // This will come fromthe registration
+  consumeDatabaseTasks({ message, channel, dbHandler });
 }
 
-init();
+mqInit('database', onRegistrationSuccess);

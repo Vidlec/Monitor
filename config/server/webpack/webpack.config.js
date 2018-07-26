@@ -23,6 +23,9 @@ module.exports = {
     alias: {
       '@services': path.resolve(CWD, `${config.SRC}/services`),
       '@models': path.resolve(CWD, `${config.SRC}/models`),
+      '@workers': path.resolve(CWD, `${config.SRC}/workers`),
+      '@const': path.resolve(CWD, `${config.SRC}/const`),
+      '@utils': path.resolve(CWD, `${config.SRC}/utils`),
     },
   },
   externals: {

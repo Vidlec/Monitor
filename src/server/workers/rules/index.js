@@ -1,9 +1,9 @@
-import mq from 'amqplib/callback_api';
+import { mqInit } from '@services/mq';
+import { consumeRuleTasks } from './mq/consume';
 
-import { register } from './mq/registration';
-
-function handleMqConnection(error, connection) {
-  connection.createChannel(register);
+function onRegistrationSuccess({ message, channel }) {
+  consumeRuleTasks({ message, channel });
+  // Any aditional queue consuming goes here
 }
 
-mq.connect('amqp://localhost', handleMqConnection);
+mqInit('rules', onRegistrationSuccess);
