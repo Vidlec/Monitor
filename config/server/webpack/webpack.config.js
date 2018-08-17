@@ -11,12 +11,14 @@ module.exports = {
     rulesWorker: `${config.SRC}/workers/rules`,
     databaseWorker: ['babel-polyfill', `${config.SRC}/workers/database`],
     dbTask: `${config.SRC}/dbTask.js`,
+    restGw: ['babel-polyfill', `${config.SRC}/gateways/rest`],
   },
   target: 'node',
   mode: environment.TYPE,
   output: {
     path: path.resolve(CWD, config.DIST),
     filename: '[name].js',
+    libraryTarget: 'commonjs',
   },
   resolve: {
     extensions: ['.js'],
@@ -28,9 +30,7 @@ module.exports = {
       '@utils': path.resolve(CWD, `${config.SRC}/utils`),
     },
   },
-  externals: {
-    vm2: "require('vm2')",
-  },
+  externals: [/^(?!\.|\/|@).+/i],
   module: {
     rules: [
       {

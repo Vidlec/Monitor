@@ -1,13 +1,14 @@
 const mq = require('amqplib/callback_api');
 const chalk = require('chalk');
 
-const data = { name: 'test' };
+const data = { name: 'test', severity: 6 };
+const conn = { gwName: 'testGW' };
 const rule = 'test';
 
 function onRulesTaskResponse(message, channel) {
   console.log(chalk.green('[✓] Recieved executed rule'));
   const data = JSON.parse(message.content);
-  console.log(data);
+  console.log(data || 'Data to be discarded');
 }
 
 function sendTask(error, { queue }, channel) {
@@ -21,8 +22,8 @@ function sendTask(error, { queue }, channel) {
   // Request rules
   console.log(chalk.blue('[?] Sending rules taks'));
   channel.sendToQueue(
-    'rules_queue',
-    Buffer.from(JSON.stringify({ rule, data })),
+    'RULES_TASKS_QUEUE',
+    Buffer.from(JSON.stringify({ rule, data, connection: conn })),
     {
       correlationId,
       replyTo: queue,
@@ -32,11 +33,11 @@ function sendTask(error, { queue }, channel) {
 
 function handleMqConnection(error, connection) {
   connection.createChannel((error, channel) => {
-    setInterval(() => {
-      channel.assertQueue('', { exclusive: true }, (err, queue) =>
-        sendTask(err, queue, channel),
-      );
-    }, 1000);
+    channel.assertQueue('', { exclusive: true }, (err, queue) =>
+      setInterval(() => {
+        sendTask(err, queue, channel);
+      }, 50),
+    );
   });
 }
 

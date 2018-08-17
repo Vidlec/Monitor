@@ -1,20 +1,37 @@
 import chalk from 'chalk';
 
-import { compileScripts } from '@services/vm';
-import { rulesQueue } from '@const/queueNames';
-import { toObject } from '@utils/mqData';
+import { rulesTasksQueue } from '@const/queueNames';
+import { rulesUpdateExchange } from '@const/exchangesNames';
 
-import { handleRuleTask } from '../tasksHandlers';
+import { handleRuleTask, handleRuleUpdate } from '../tasksHandlers';
 
-export function consumeRuleTasks({ channel, message }) {
-  const rules = toObject(message.content);
-  const compiledRules = compileScripts(rules);
-
-  channel.assertQueue(rulesQueue, { durable: false });
+export function consumeRuleTasks({ channel, rulesStore }) {
+  channel.assertQueue(rulesTasksQueue, { durable: false });
   channel.prefetch(10); // TODO: Get from config
 
-  console.log(chalk.blue('[...] Awaiting rules tasks', rulesQueue));
-  channel.consume(rulesQueue, message =>
-    handleRuleTask(message, channel, compiledRules),
+  console.log(chalk.blue('[...] Awaiting rules tasks on', rulesTasksQueue));
+  channel.consume(rulesTasksQueue, message =>
+    handleRuleTask(message, channel, rulesStore),
+  );
+}
+
+export function consumeRulesUpdate({ channel, rulesStore }) {
+  channel.assertExchange(rulesUpdateExchange, 'fanout', { durable: false });
+
+  channel.assertQueue(
+    '',
+    { exclusive: true },
+    (error, { queue }) => {
+      console.log(
+        chalk.blue('[...] Awaiting rules updates on', rulesUpdateExchange),
+      );
+
+      channel.bindQueue(queue, rulesUpdateExchange, '');
+
+      channel.consume(queue, message =>
+        handleRuleUpdate(message, channel, rulesStore),
+      );
+    },
+    { noAck: true },
   );
 }

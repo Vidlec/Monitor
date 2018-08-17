@@ -1,8 +1,8 @@
 import { NodeVM } from 'vm2';
 
 // TODO: Add error handling on exectution
-export function executeScript({ script }, data) {
-  return script(data);
+export function executeScript(script, connection, data) {
+  return script(connection, data);
 }
 
 /*
@@ -13,10 +13,16 @@ export function executeScript({ script }, data) {
 export function compileScripts(scripts) {
   const vm = new NodeVM();
 
-  return scripts.map(({ name, code }) => {
-    return {
-      name,
-      script: vm.run(code),
-    };
-  });
+  return Object.values(scripts).reduce(
+    (acc, { name, rule, filter, validation }) => {
+      return Object.assign(acc, {
+        [name]: {
+          rule: vm.run(rule),
+          filter: vm.run(filter),
+          validation: vm.run(validation),
+        },
+      });
+    },
+    {},
+  );
 }

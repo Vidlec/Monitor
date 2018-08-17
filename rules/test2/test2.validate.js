@@ -1,3 +1,3 @@
 module.exports = data => {
-  return data;
+  return data.severity > 3;
 };

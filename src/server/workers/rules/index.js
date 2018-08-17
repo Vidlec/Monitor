@@ -1,8 +1,14 @@
 import { mqInit } from '@services/mq';
-import { consumeRuleTasks } from './mq/consume';
+
+import { consumeRuleTasks, consumeRulesUpdate } from './mq/consume';
+import { handleRulesUpdate } from './mq/tasksHandlers';
+import rulesStore from './mq/rules';
 
 function onRegistrationSuccess({ message, channel }) {
-  consumeRuleTasks({ message, channel });
+  handleRulesUpdate(message, channel, rulesStore);
+
+  consumeRuleTasks({ channel, rulesStore });
+  consumeRulesUpdate({ channel, rulesStore });
   // Any aditional queue consuming goes here
 }
 

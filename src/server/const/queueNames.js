@@ -1,5 +1,6 @@
-const rulesQueue = 'RULES_QUEUE';
+const rulesUpdateQueue = 'RULES_UPDATE_QUEUE';
+const rulesTasksQueue = 'RULES_TASKS_QUEUE';
 const registrationQueue = 'REGISTRATION_QUEUE';
 const databaseQueue = 'DATABASE_QUEUE';
 
-export { rulesQueue, registrationQueue, databaseQueue };
+export { rulesUpdateQueue, rulesTasksQueue, registrationQueue, databaseQueue };

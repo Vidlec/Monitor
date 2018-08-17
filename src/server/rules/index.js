@@ -3,13 +3,16 @@ import find from 'find';
 
 import config from '../../../config/server/config';
 
-function reduceRules(acc, { name, code }) {
+function reduceRules(acc, { name, code, type }) {
   const rule = {
     name,
-    code,
+    [type]: code,
   };
+  const rootName = acc[name] ? acc[name].name : name;
 
-  return Object.assign(acc, { [name]: rule });
+  return Object.assign(acc, {
+    [rootName]: Object.assign(acc[rootName] || {}, rule),
+  });
 }
 
 function getRule(file) {
@@ -17,9 +20,16 @@ function getRule(file) {
     fs.readFile(`./${file}`, 'utf8', (err, data) => {
       if (err) reject(err);
 
+      const isRule = /.*rules.js/.test(file);
+      const isFilter = /.*filter.js/.test(file);
+
       // Remove new lines and trim
       resolve({
-        name: file.replace(/.*\/|\.rules.js/gm, ''),
+        type: isRule ? 'rule' : isFilter ? 'filter' : 'validation',
+        name: file.replace(
+          /.*\/|\.rules\.js|\.filter\.js|\.validate\.js/gm,
+          '',
+        ),
         code: data.replace(/(\n|\r)/gm, '').trim(),
       });
     });
@@ -29,7 +39,7 @@ function getRule(file) {
 export function getRules() {
   return new Promise((resolve, reject) => {
     find
-      .file(/rules\.js/, config.rulesFolder, files => {
+      .file(/rules\.js|filter.js|validate\.js/, config.rulesFolder, files => {
         const promises = files.map(getRule);
         Promise.all(promises).then(rules =>
           resolve(rules.reduce(reduceRules, {})),
