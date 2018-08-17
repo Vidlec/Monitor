@@ -1,12 +1,16 @@
 import { toObject } from '@utils/mqData';
-import sendRulesTask from '../../../services/mq/sendRulesTask';
+import { rulesTasksQueue } from '@const/queueNames';
+
+import sendTask from '../../../services/mq/sendTask';
 
 export const post = (req, res, next) => {
   const { body: data } = req;
-  const { channel, replyQueue, gwName } = res.locals;
+  const { channel, replyQueue, connection } = res.locals;
+  console.log(connection);
 
-  sendRulesTask(channel, replyQueue, data, { gwName }).then(console.log);
-  sendRulesTask(channel, replyQueue, data, { gwName })
-    .then(result => res.json(toObject(result)))
+  sendTask(channel, replyQueue, { data, connection }, rulesTasksQueue)
+    .then(result => {
+      return res.json(toObject(result));
+    })
     .catch(next);
 };

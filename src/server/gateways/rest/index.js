@@ -5,6 +5,17 @@ import { mqInit, createQueue } from '@services/mq';
 
 import restRouter from './routes';
 
+const gwType = 'rest';
+
+function getConnectionData(req) {
+  return {
+    ip: req.ip,
+    hostname: req.ip,
+    gwType,
+    gwName: 'testGW',
+  };
+}
+
 async function onRegistrationSuccess({ message, channel }) {
   // Start REST server
   const app = express();
@@ -14,7 +25,7 @@ async function onRegistrationSuccess({ message, channel }) {
   app.use((req, res, next) => {
     res.locals.channel = channel;
     res.locals.replyQueue = replyQueue;
-    res.locals.gwName = 'testGW';
+    res.locals.connection = getConnectionData(req);
     next();
   });
 

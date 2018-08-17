@@ -9,15 +9,12 @@ import { toObject } from '@utils/mqData';
 export function handleRuleTask(message, channel, rulesStore) {
   console.log(chalk.green('[✓] Recieved rule task'));
   const { data, connection } = toObject(message.content);
+  console.log(data, connection);
 
   const rules = rulesStore.get();
-  console.log(rules);
-  console.log(data, connection);
   const ruleToExecute = Object.keys(rules).find(key =>
     executeScript(rules[key].filter, connection, data),
   );
-
-  console.log(ruleToExecute);
 
   const shouldExecuteRule =
     ruleToExecute &&
@@ -26,9 +23,7 @@ export function handleRuleTask(message, channel, rulesStore) {
     ? executeScript(rules[ruleToExecute].rule, connection, data)
     : null;
 
-  console.log(result);
-
-  replyTo({ channel, message, data: result || 'something' });
+  replyTo({ channel, message, data: result });
 }
 
 export function handleRulesUpdate(message, _, rulesStore) {

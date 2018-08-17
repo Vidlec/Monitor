@@ -8,9 +8,10 @@ const CWD = process.cwd();
 module.exports = {
   entry: {
     main: config.SRC,
-    rulesWorker: `${config.SRC}/workers/rules`,
+    rulesWorker: ['babel-polyfill', `${config.SRC}/workers/rules`],
     databaseWorker: ['babel-polyfill', `${config.SRC}/workers/database`],
-    dbTask: `${config.SRC}/dbTask.js`,
+    dbTask: ['babel-polyfill', `${config.SRC}/dbTask.js`],
+    registration: ['babel-polyfill', `${config.SRC}/services/mq/rules.js`],
     restGw: ['babel-polyfill', `${config.SRC}/gateways/rest`],
   },
   target: 'node',

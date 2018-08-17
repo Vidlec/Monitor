@@ -8,14 +8,8 @@ export function publishRegistration({ channel, correlationId, replyTo, type }) {
   });
 }
 
-export function publishRuleTask({
-  channel,
-  correlationId,
-  replyTo,
-  data,
-  connection,
-}) {
-  channel.sendToQueue(rulesTasksQueue, toBuffer({ data, connection }), {
+export function publishTask({ channel, correlationId, replyTo, data, queue }) {
+  channel.sendToQueue(queue, toBuffer(data), {
     correlationId,
     replyTo,
   });
@@ -25,7 +19,7 @@ export function replyTo({ channel, message, data }) {
   const {
     properties: { replyTo, correlationId },
   } = message;
-  console.log(replyTo, correlationId);
+
   /* Send back the reply */
   channel.sendToQueue(replyTo, toBuffer(data), {
     correlationId,
