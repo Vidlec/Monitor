@@ -1,5 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+
 const config = require('../index');
 const environment = require('../../common/environment');
 
@@ -7,11 +9,9 @@ const CWD = process.cwd();
 
 module.exports = {
   entry: {
-    main: config.SRC,
+    main: ['babel-polyfill', config.SRC],
     rulesWorker: ['babel-polyfill', `${config.SRC}/workers/rules`],
     databaseWorker: ['babel-polyfill', `${config.SRC}/workers/database`],
-    dbTask: ['babel-polyfill', `${config.SRC}/dbTask.js`],
-    registration: ['babel-polyfill', `${config.SRC}/services/mq/rules.js`],
     restGw: ['babel-polyfill', `${config.SRC}/gateways/rest`],
   },
   target: 'node',
@@ -67,5 +67,14 @@ module.exports = {
       },
     ],
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new UglifyJsPlugin({
+      uglifyOptions: {
+        compress: {
+          drop_console: !environment.DEVELOPMENT,
+        },
+      },
+    }),
+  ],
 };

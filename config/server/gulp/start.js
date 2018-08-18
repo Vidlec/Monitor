@@ -10,9 +10,15 @@ const environment = require('../../common/environment');
 
 const workers = [
   `${config.DIST}/rulesWorker.js`,
+  `${config.DIST}/databaseWorker.js`,
   `${config.DIST}/restGw.js`,
-  `${config.DIST}/registration.js`,
 ];
+
+const newTerminal = command => {
+  return `${
+    config.SCRIPTS
+  }/newTerminal/macos.sh \"cd ${process.cwd()}/ && ${command}\"`;
+};
 
 gulp.task('start:server', callback => {
   if (environment.DEVELOPMENT) {
@@ -23,10 +29,9 @@ gulp.task('start:server', callback => {
     });
 
     if (argv.all) {
-      workers.forEach(worker => {
-        exec(`npx nodemon -w ${worker} ${worker}`, err => {
-          callback(err);
-        });
+      workers.forEach((worker, index) => {
+        const command = `npx nodemon -w ${worker} ${worker}`;
+        exec(newTerminal(command, index));
       });
     }
 
@@ -43,9 +48,14 @@ gulp.task('start:server', callback => {
       });
     watch(config.SRC, ['clean:server', 'bundle:server']);
   } else {
+    if (argv.all) {
+      workers.forEach(worker => {
+        exec(`node ${worker}`, err => {
+          callback(err);
+        });
+      });
+    }
     return exec(`node ${config.DIST}/main.js`, (err, stdout, stderr) => {
-      console.log(stdout);
-      console.log(stderr);
       return callback(err);
     });
   }

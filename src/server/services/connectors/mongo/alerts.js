@@ -18,7 +18,7 @@ export const updateAlert = ({ alert, props }) => {
   return Alert.update({ identifier: props.identifier }, newAlert);
 };
 
-export const deduplicateAlert = props => {
+export const deduplicateAlert = ({ data: props }) => {
   return getAlert({ identifier: props.identifier }).then(alert => {
     if (alert) {
       props.count = alert.count + 1;

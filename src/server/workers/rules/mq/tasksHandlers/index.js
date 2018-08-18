@@ -9,7 +9,6 @@ import { toObject } from '@utils/mqData';
 export function handleRuleTask(message, channel, rulesStore) {
   console.log(chalk.green('[✓] Recieved rule task'));
   const { data, connection } = toObject(message.content);
-  console.log(data, connection);
 
   const rules = rulesStore.get();
   const ruleToExecute = Object.keys(rules).find(key =>
@@ -28,7 +27,9 @@ export function handleRuleTask(message, channel, rulesStore) {
 
 export function handleRulesUpdate(message, _, rulesStore) {
   console.log(chalk.green('[✓] Recieved rules update'));
+
   const rules = toObject(message.content);
   const compiledRules = compileScripts(rules);
+
   rulesStore.set(compiledRules);
 }

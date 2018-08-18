@@ -1,8 +1,9 @@
 import chalk from 'chalk';
 import mq from 'amqplib/callback_api';
 
+import { registrationQueue } from '@const/queueNames';
 import { consumeRegistration } from '../consume';
-import { publishRegistration } from '../publish';
+import { publishTask, replyTo } from '../publish';
 
 function register(channel, successCallback, type) {
   const correlationId = 'there will be some random string';
@@ -13,14 +14,33 @@ function register(channel, successCallback, type) {
     consumeRegistration(queueName, channel, successCallback);
 
     // Request registration
-    publishRegistration({ channel, correlationId, replyTo: queueName, type });
+    publishTask({
+      channel,
+      correlationId,
+      replyTo: queueName,
+      data: type,
+      queue: registrationQueue,
+    });
   });
 }
 
-export default function mqInit(type, successCallback) {
+export function registerServe(channel, rules) {
+  channel.assertQueue(registrationQueue, { durable: false });
+  console.log(chalk.blue('[...] Awaiting registration requests'));
+
+  channel.consume(registrationQueue, message => {
+    console.log(chalk.green('[✓] Recieved registration request'));
+
+    replyTo({ channel, message, data: rules });
+  });
+}
+
+export function mqConnect(successCallback) {
   mq.connect('amqp://localhost', (error, connection) =>
-    connection.createChannel((error, channel) =>
-      register(channel, successCallback, type),
-    ),
+    connection.createChannel((error, channel) => successCallback(channel)),
   );
+}
+
+export function mqRegister(type, successCallback) {
+  mqConnect(channel => register(channel, successCallback, type));
 }

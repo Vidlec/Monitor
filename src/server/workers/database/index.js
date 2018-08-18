@@ -1,10 +1,10 @@
-import { mqInit } from '@services/mq';
+import { mqRegister } from '@services/mq';
 import { consumeDatabaseTasks } from './mq/consume';
 import createDbHandler from './dbHandler';
 
 async function onRegistrationSuccess({ message, channel }) {
-  const dbHandler = await createDbHandler('mongo'); // This will come fromthe registration
+  const dbHandler = await createDbHandler('mongo'); // This will come from the registration
   consumeDatabaseTasks({ message, channel, dbHandler });
 }
 
-mqInit('database', onRegistrationSuccess);
+mqRegister('database', onRegistrationSuccess);

@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import { databaseQueue } from '@const/queueNames';
+import { replyTo } from '@services/mq';
 import { toObject } from '@utils/mqData';
 
 export function consumeDatabaseTasks({ channel, dbHandler }) {
@@ -12,7 +13,10 @@ export function consumeDatabaseTasks({ channel, dbHandler }) {
     console.log(task);
 
     dbHandler(task)
-      .then(() => channel.ack(message))
-      .catch(err => console.log(err));
+      .then(data => {
+        console.log(data);
+        replyTo({ channel, message, data });
+      })
+      .catch(err => replyTo({ channel, message, data: err }));
   });
 }

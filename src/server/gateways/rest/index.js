@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
-import { mqInit, createQueue } from '@services/mq';
+import { mqRegister, createQueue } from '@services/mq';
 
 import restRouter from './routes';
 
@@ -34,4 +34,4 @@ async function onRegistrationSuccess({ message, channel }) {
   app.listen(3000, () => console.log('Example app listening on port 3000!'));
 }
 
-mqInit('gw', onRegistrationSuccess);
+mqRegister('gw', onRegistrationSuccess);

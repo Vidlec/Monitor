@@ -1,10 +1,13 @@
 import chalk from 'chalk';
+import uuid from 'uuid/v4';
+
+import { toObject } from '@utils/mqData';
 
 import { publishTask } from '../publish';
 
 export default function sendTask(channel, { queue: replyTo }, data, queue) {
   return new Promise((resolve, reject) => {
-    const correlationId = 'there will be some random string for rulesTask';
+    const correlationId = uuid();
 
     // Send rules task
     console.log(chalk.blue('[?] Sending task'));
@@ -23,7 +26,7 @@ export default function sendTask(channel, { queue: replyTo }, data, queue) {
         console.log(chalk.green('[✓] Recieved finshed task'));
 
         channel.cancel(message.fields.consumerTag);
-        resolve(message.content);
+        resolve(toObject(message.content));
       },
       {
         noAck: true,
