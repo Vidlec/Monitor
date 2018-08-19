@@ -1,0 +1,5 @@
+{
+  "rabbitMQ": "amqp://localhost",
+  "database": "mongo",
+  "rulesFolder": "/Users/jvidlak/Projects/Monitor/rules"
+}

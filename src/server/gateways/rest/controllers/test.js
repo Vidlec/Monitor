@@ -1,6 +1,6 @@
 import { rulesTasksQueue, databaseQueue } from '@const/queueNames';
 import dbTypes from '@const/databaseTypes';
-import { request } from '@utils/mq';
+import { request } from '@utils';
 
 export const post = (req, res, next) => {
   const { body: data } = req;

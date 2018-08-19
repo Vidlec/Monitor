@@ -1,5 +1,6 @@
 import { rulesTasksQueue } from '@const/queueNames';
-import rabbit, { register, rpc } from '@utils/mq';
+import { rabbit, register, rpc } from '@utils';
+import types from '@const/registrationTypes';
 
 import { handleRuleTask, handleRulesUpdate } from './mq/tasksHandlers';
 
@@ -13,7 +14,7 @@ const rabbitConfig = {
 async function init() {
   // Connect to mq and register with main server
   const channel = await rabbit(rabbitConfig);
-  const rules = await register({ channel, type: 'RULES' });
+  const rules = await register({ channel, type: types.rules });
   handleRulesUpdate(rules, rulesStore);
 
   // Set max tasks for this worker

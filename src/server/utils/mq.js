@@ -4,7 +4,7 @@ import EventEmitter from 'events';
 
 import { toBuffer, toObject } from './mqData';
 
-export default function rabbit(config = {}) {
+export function rabbit(config = {}) {
   const { host, replyQueue } = config;
   return mq
     .connect(host)

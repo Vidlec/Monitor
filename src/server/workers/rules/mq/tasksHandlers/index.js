@@ -1,7 +1,6 @@
 import chalk from 'chalk';
 
 import { executeScript, compileScripts } from '@services/vm';
-import { toObject } from '@utils/mqData';
 
 /* This handler handles running rule against incoming data */
 export function handleRuleTask({ content, rulesStore }) {

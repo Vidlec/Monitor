@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
-import rabbit, { register } from '@utils/mq';
+import { rabbit, register } from '@utils';
 
 import restRouter from './routes';
 

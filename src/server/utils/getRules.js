@@ -1,8 +1,6 @@
 import fs from 'fs';
 import find from 'find';
 
-import config from '../../../config/server/config';
-
 function reduceRules(acc, { name, code, type }) {
   const rule = {
     name,
@@ -17,7 +15,7 @@ function reduceRules(acc, { name, code, type }) {
 
 function getRule(file) {
   return new Promise((resolve, reject) => {
-    fs.readFile(`./${file}`, 'utf8', (err, data) => {
+    fs.readFile(file, 'utf8', (err, data) => {
       if (err) reject(err);
 
       const isRule = /.*rules.js/.test(file);
@@ -36,10 +34,10 @@ function getRule(file) {
   });
 }
 
-export function getRules() {
+export default function getRules(rulesFolder) {
   return new Promise((resolve, reject) => {
     find
-      .file(/rules\.js|filter.js|validate\.js/, config.rulesFolder, files => {
+      .file(/rules\.js|filter.js|validate\.js/, rulesFolder, files => {
         const promises = files.map(getRule);
         Promise.all(promises).then(rules =>
           resolve(rules.reduce(reduceRules, {})),
@@ -51,10 +49,3 @@ export function getRules() {
       });
   });
 }
-
-async function init() {
-  const rules = await getRules();
-  console.log(rules);
-}
-
-init();

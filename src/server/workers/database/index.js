@@ -1,5 +1,6 @@
 import { databaseQueue } from '@const/queueNames';
-import rabbit, { register, rpc } from '@utils/mq';
+import { register, rpc, rabbit } from '@utils';
+import types from '@const/registrationTypes';
 
 import createDbHandler from './dbHandler';
 
@@ -12,9 +13,9 @@ async function init() {
   // Connect to mq
   const channel = await rabbit(rabbitConfig);
   // Register with main server
-  await register({ channel, type: 'DATABASE' });
+  const dbType = await register({ channel, type: types.database });
 
-  const dbHandler = await createDbHandler('mongo');
+  const dbHandler = await createDbHandler(dbType);
 
   // Set max tasks for this worker
   channel.prefetch(10);
