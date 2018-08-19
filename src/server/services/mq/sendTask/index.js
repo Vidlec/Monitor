@@ -5,9 +5,15 @@ import { toObject } from '@utils/mqData';
 
 import { publishTask } from '../publish';
 
-export default function sendTask(channel, { queue: replyTo }, data, queue) {
+export default function sendTask(channel, data, queue, replyTo) {
   return new Promise((resolve, reject) => {
     const correlationId = uuid();
+    channel.assertQueue(queue, { durable: false });
+
+    // Wait for event from task consumer
+    channel.responseEmitter.once(correlationId, content =>
+      resolve(toObject(content)),
+    );
 
     // Send rules task
     console.log(chalk.blue('[?] Sending task'));
@@ -18,19 +24,5 @@ export default function sendTask(channel, { queue: replyTo }, data, queue) {
       data,
       queue,
     });
-
-    // Finished rule task recieved
-    channel.consume(
-      replyTo,
-      message => {
-        console.log(chalk.green('[✓] Recieved finshed task'));
-
-        channel.cancel(message.fields.consumerTag);
-        resolve(toObject(message.content));
-      },
-      {
-        noAck: true,
-      },
-    );
   });
 }

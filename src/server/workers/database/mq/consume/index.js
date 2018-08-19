@@ -5,6 +5,7 @@ import { toObject } from '@utils/mqData';
 
 export function consumeDatabaseTasks({ channel, dbHandler }) {
   channel.assertQueue(databaseQueue, { durable: false });
+  channel.prefetch(10);
   console.log(chalk.blue('[...] Awaiting database tasks'));
 
   channel.consume(databaseQueue, message => {

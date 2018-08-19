@@ -5,15 +5,15 @@ import sendTask from '../../../services/mq/sendTask';
 
 export const post = (req, res, next) => {
   const { body: data } = req;
-  const { channel, replyQueue, connection } = res.locals;
+  const { channel, connection, replyTo } = res.locals;
 
-  sendTask(channel, replyQueue, { data, connection }, rulesTasksQueue)
+  sendTask(channel, { data, connection }, rulesTasksQueue, replyTo)
     .then(data =>
       sendTask(
         channel,
-        replyQueue,
         { type: dbTypes.ALERT_ADD, data },
         databaseQueue,
+        replyTo,
       ),
     )
     .then(result => res.json(result))

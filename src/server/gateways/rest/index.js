@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 
 import { mqRegister, createQueue } from '@services/mq';
+import createTaskConsumer from '@services/mq/createTaskConsumer';
 
 import restRouter from './routes';
 
@@ -19,12 +20,12 @@ function getConnectionData(req) {
 async function onRegistrationSuccess({ message, channel }) {
   // Start REST server
   const app = express();
-  const replyQueue = await createQueue(channel);
+  const newChannel = createTaskConsumer(channel, 'GW_REPLY_QUEUE');
 
   // Attach MQ connection to every request
   app.use((req, res, next) => {
-    res.locals.channel = channel;
-    res.locals.replyQueue = replyQueue;
+    res.locals.channel = newChannel;
+    res.locals.replyTo = 'GW_REPLY_QUEUE';
     res.locals.connection = getConnectionData(req);
     next();
   });
