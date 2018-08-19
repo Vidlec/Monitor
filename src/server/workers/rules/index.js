@@ -1,15 +1,26 @@
-import { mqRegister } from '@services/mq';
+import { rulesTasksQueue } from '@const/queueNames';
+import rabbit, { register, rpc } from '@utils/mq';
 
-import { consumeRuleTasks, consumeRulesUpdate } from './mq/consume';
-import { handleRulesUpdate } from './mq/tasksHandlers';
+import { handleRuleTask, handleRulesUpdate } from './mq/tasksHandlers';
+
 import rulesStore from './mq/rules';
 
-function onRegistrationSuccess({ message, channel }) {
-  handleRulesUpdate(message, channel, rulesStore);
+const rabbitConfig = {
+  host: 'amqp://localhost',
+  replyQueue: 'RULES_WORKER_REPLY_QUEUE',
+};
 
-  consumeRuleTasks({ channel, rulesStore });
-  consumeRulesUpdate({ channel, rulesStore });
-  // Any aditional queue consuming goes here
+async function init() {
+  // Connect to mq and register with main server
+  const channel = await rabbit(rabbitConfig);
+  const rules = await register({ channel, type: 'RULES' });
+  handleRulesUpdate(rules, rulesStore);
+
+  // Set max tasks for this worker
+  channel.prefetch(10);
+  rpc({ channel, queue: rulesTasksQueue, durable: false }, ({ content }) => {
+    return handleRuleTask({ content, rulesStore });
+  });
 }
 
-mqRegister('rules', onRegistrationSuccess);
+init();

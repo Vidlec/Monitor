@@ -1,20 +1,18 @@
 import { rulesTasksQueue, databaseQueue } from '@const/queueNames';
 import dbTypes from '@const/databaseTypes';
-
-import sendTask from '../../../services/mq/sendTask';
+import { request } from '@utils/mq';
 
 export const post = (req, res, next) => {
   const { body: data } = req;
-  const { channel, connection, replyTo } = res.locals;
+  const { channel, connection } = res.locals;
 
-  sendTask(channel, { data, connection }, rulesTasksQueue, replyTo)
+  request({ channel, queue: rulesTasksQueue, data: { data, connection } })
     .then(data =>
-      sendTask(
+      request({
         channel,
-        { type: dbTypes.ALERT_ADD, data },
-        databaseQueue,
-        replyTo,
-      ),
+        queue: databaseQueue,
+        data: { type: dbTypes.ALERT_ADD, data },
+      }),
     )
     .then(result => res.json(result))
     .catch(next);

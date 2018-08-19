@@ -1,8 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
-import { mqRegister, createQueue } from '@services/mq';
-import createTaskConsumer from '@services/mq/createTaskConsumer';
+import rabbit, { register } from '@utils/mq';
 
 import restRouter from './routes';
 
@@ -17,22 +16,31 @@ function getConnectionData(req) {
   };
 }
 
-async function onRegistrationSuccess({ message, channel }) {
-  // Start REST server
+const rabbitConfig = {
+  host: 'amqp://localhost',
+  replyQueue: 'REST_GW_REPLY_QUEUE',
+};
+
+async function init() {
+  // Connect to mq and register with main server
+  const channel = await rabbit(rabbitConfig);
+  await register({ channel, type: 'rules' });
+
+  // Create REST server
   const app = express();
-  const newChannel = createTaskConsumer(channel, 'GW_REPLY_QUEUE');
 
   // Attach MQ connection to every request
   app.use((req, res, next) => {
-    res.locals.channel = newChannel;
-    res.locals.replyTo = 'GW_REPLY_QUEUE';
+    res.locals.channel = channel;
     res.locals.connection = getConnectionData(req);
     next();
   });
 
   app.use(bodyParser.json());
   app.use('/api', restRouter);
+
+  // Gracefuly start the server
   app.listen(3000, () => console.log('Example app listening on port 3000!'));
 }
 
-mqRegister('gw', onRegistrationSuccess);
+init();

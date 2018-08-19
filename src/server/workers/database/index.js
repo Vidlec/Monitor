@@ -1,10 +1,30 @@
-import { mqRegister } from '@services/mq';
-import { consumeDatabaseTasks } from './mq/consume';
+import { databaseQueue } from '@const/queueNames';
+import rabbit, { register, rpc } from '@utils/mq';
+
 import createDbHandler from './dbHandler';
 
-async function onRegistrationSuccess({ message, channel }) {
-  const dbHandler = await createDbHandler('mongo'); // This will come from the registration
-  consumeDatabaseTasks({ message, channel, dbHandler });
+const rabbitConfig = {
+  host: 'amqp://localhost',
+  replyQueue: 'DATABASE_WORKER_REPLY_QUEUE',
+};
+
+async function init() {
+  // Connect to mq
+  const channel = await rabbit(rabbitConfig);
+  // Register with main server
+  await register({ channel, type: 'DATABASE' });
+
+  const dbHandler = await createDbHandler('mongo');
+
+  // Set max tasks for this worker
+  channel.prefetch(10);
+
+  rpc(
+    { channel, queue: databaseQueue, durable: false },
+    ({ content: task }) => {
+      return dbHandler(task);
+    },
+  );
 }
 
-mqRegister('database', onRegistrationSuccess);
+init();
