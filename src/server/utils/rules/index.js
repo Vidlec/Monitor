@@ -17,10 +17,16 @@ async function filterFolders(files, path) {
 }
 
 async function composeRules(folderPath) {
+  const [filter, common, specific] = await Promise.all([
+    readRule(`${folderPath}/filter.js`),
+    readCommonRules(`${folderPath}/common`),
+    readSpecificRules(`${folderPath}/specific`),
+  ]);
+
   return {
-    filter: await readRule(`${folderPath}/filter.js`),
-    common: await readCommonRules(`${folderPath}/common`),
-    specific: await readSpecificRules(`${folderPath}/specific`),
+    filter,
+    common,
+    specific,
   };
 }
 

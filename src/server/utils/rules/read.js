@@ -15,8 +15,10 @@ export async function readCommonRules(path) {
   const folderExists = existsSync(path);
   if (!folderExists) return null;
 
-  const pre = await readRule(`${path}/pre.rule.js`);
-  const post = await readRule(`${path}/post.rule.js`);
+  const [pre, post] = await Promise.all([
+    readRule(`${path}/pre.rule.js`),
+    readRule(`${path}/post.rule.js`),
+  ]);
 
   return {
     pre: !!pre ? pre : null,
