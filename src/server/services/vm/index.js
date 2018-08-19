@@ -1,8 +1,8 @@
 import { NodeVM } from 'vm2';
 
 // TODO: Add error handling on exectution
-export function executeScript(script, connection, data) {
-  return script(connection, data);
+export function executeScript(script, connection, data, additional) {
+  return script(connection, data, additional);
 }
 
 function compileRules(specific, vm) {
