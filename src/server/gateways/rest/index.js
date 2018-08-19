@@ -12,7 +12,7 @@ function getConnectionData(req) {
     ip: req.ip,
     hostname: req.ip,
     gwType,
-    gwName: 'testGW',
+    gwName: 'testGw',
   };
 }
 

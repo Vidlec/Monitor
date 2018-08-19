@@ -7,13 +7,14 @@ export const post = (req, res, next) => {
   const { channel, connection } = res.locals;
 
   request({ channel, queue: rulesTasksQueue, data: { data, connection } })
-    .then(data =>
-      request({
+    .then(data => {
+      if (!data) return 'No valid rules found';
+      return request({
         channel,
         queue: databaseQueue,
         data: { type: dbTypes.ALERT_ADD, data },
-      }),
-    )
+      });
+    })
     .then(result => res.json(result))
     .catch(next);
 };

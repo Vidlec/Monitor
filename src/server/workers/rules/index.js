@@ -15,6 +15,7 @@ async function init() {
   // Connect to mq and register with main server
   const channel = await rabbit(rabbitConfig);
   const rules = await register({ channel, type: types.rules });
+
   handleRulesUpdate(rules, rulesStore);
 
   // Set max tasks for this worker

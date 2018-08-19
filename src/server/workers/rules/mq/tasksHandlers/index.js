@@ -11,17 +11,27 @@ export function handleRuleTask({ content, rulesStore }) {
 
     const rules = rulesStore.get();
 
-    const ruleToExecute = Object.keys(rules).find(key =>
-      executeScript(rules[key].filter, connection, data),
+    const ruleToExecute = Object.keys(rules).find(
+      key => connection.gwType === key,
     );
 
-    const shouldExecuteRule =
-      ruleToExecute &&
-      executeScript(rules[ruleToExecute].validation, connection, data);
+    if (!ruleToExecute) resolve(null);
 
-    const result = shouldExecuteRule
-      ? executeScript(rules[ruleToExecute].rule, connection, data)
-      : null;
+    const rule = rules[ruleToExecute];
+
+    const { common, filter, specific } = rule;
+    const afterPre = common.pre && executeScript(common.pre, connection, data);
+    const specificToRun =
+      filter && executeScript(filter, connection, data, afterPre);
+
+    const afterSpecific =
+      specificToRun && specific[specificToRun]
+        ? executeScript(specific[specificToRun], connection, data, afterPre)
+        : afterPre;
+
+    const result = common.post
+      ? executeScript(common.post, connection, data, afterSpecific)
+      : afterSpecific;
 
     resolve(result);
   });
