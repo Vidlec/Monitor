@@ -26,7 +26,7 @@ async function init() {
   );
 
   subscribe({ channel, exchange: rulesUpdateExchange }, ({ data }) =>
-    console.log(data),
+    handleRulesUpdate(data, rulesStore),
   );
 }
 

@@ -1,8 +1,9 @@
 import 'babel-polyfill';
 
-import { getRules, getConfig, rabbit, rpc, broadcast } from '@utils';
-import { rulesUpdateExchange } from '@const/exchangesNames';
+import { getRules, getConfig, rabbit, rpc } from '@utils';
+
 import handleOnRegistration from './handleOnRegistration';
+import handleManagement from './manage';
 
 async function init() {
   const config = await getConfig(`${process.cwd()}/config/server/config.json`);
@@ -21,14 +22,13 @@ async function init() {
   // Serve registration requests
   // It provides data to the worker depending on its type
   // Rules worker gets rules, DB worker gets db type etc...
-  rpc(
-    { channel, queue: 'REGISTRATION_QUEUE', durable: false },
-    ({ content: data }) => handleOnRegistration({ data, config, rules }),
+  rpc({ channel, queue: 'REGISTRATION_QUEUE' }, ({ content: data }) =>
+    handleOnRegistration({ data, config, rules }),
   );
 
-  setInterval(() => {
-    broadcast({ channel, exchange: rulesUpdateExchange, data: rules });
-  }, 4000);
+  rpc({ channel, queue: 'MANAGEMENT_QUEUE' }, ({ content: data }) =>
+    handleManagement({ channel, data, config }),
+  );
 }
 
 init();

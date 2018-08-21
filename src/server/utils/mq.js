@@ -113,20 +113,32 @@ export function reply({ channel, message, data }) {
  * Consumes queue and returns message
  */
 export function consume(
-  { channel, queue, durable = false, autoDelete = false, binding = {} },
+  {
+    channel,
+    queue,
+    durable = false,
+    autoDelete = false,
+    noAck = false,
+    binding = {},
+  },
   onSuccess,
 ) {
   // Check if queue exists or ccreate it
-  channel.assertQueue(queue, { durable }).then(({ queue: queueName }) => {
-    console.log('[...] Consuming queue: ', queueName);
+  channel
+    .assertQueue(queue, { durable, autoDelete })
+    .then(({ queue: queueName }) => {
+      console.log(queueName);
+      console.log('[...] Consuming queue: ', queueName);
 
-    const { bindTo } = binding;
+      const { bindTo } = binding;
 
-    if (bindTo) channel.bindQueue(queueName, bindTo, '');
-    channel.consume(queueName, message =>
-      onSuccess({ message, data: toObject(message.content) }),
-    );
-  });
+      if (bindTo) channel.bindQueue(queueName, bindTo, '');
+      channel.consume(
+        queueName,
+        message => onSuccess({ message, data: toObject(message.content) }),
+        { noAck },
+      );
+    });
 }
 
 /**
@@ -162,5 +174,9 @@ export function subscribe({ channel, exchange, durable = false }, onSuccess) {
   const binding = {
     bindTo: exchange,
   };
-  consume({ channel, queue: '', binding, autoDelete: true }, onSuccess);
+
+  consume(
+    { channel, queue: '', binding, autoDelete: true, noAck: true },
+    onSuccess,
+  );
 }
