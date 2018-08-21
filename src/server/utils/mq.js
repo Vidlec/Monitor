@@ -2,42 +2,45 @@ import mq from 'amqplib';
 import uuid from 'uuid/v4';
 import EventEmitter from 'events';
 
+import { getInfo } from '@utils';
+
 import { toBuffer, toObject } from './mqData';
 
 export function rabbit(config = {}) {
-  const { host, replyQueue } = config;
-  return mq
-    .connect(host)
-    .then(connection => connection.createChannel())
-    .then(async channel => {
-      // Assert reply queue
-      const { queue } = await channel.assertQueue(replyQueue || '', {
-        durable: false,
-      });
+  const { host } = config;
+  return mq.connect(host).then(async connection => {
+    const channel = await connection.createChannel();
 
-      // Create reply queue consumer
-      channel.consume(
-        queue,
-        message =>
-          channel.custom.responseEmitter.emit(
-            message.properties.correlationId,
-            message.content,
-          ),
-        { noAck: true },
-      );
-
-      // Create event emmiter
-      const responseEmitter = new EventEmitter();
-      responseEmitter.setMaxListeners(0);
-
-      // Attach it to channel object to be used in task handler
-      channel.custom = {
-        responseEmitter,
-        replyQueue: queue,
-      };
-
-      return channel;
+    // Assert reply queue
+    const { queue } = await channel.assertQueue('', {
+      durable: false,
+      exclusive: true,
+      autoDelete: true,
     });
+
+    // Create reply queue consumer
+    channel.consume(
+      queue,
+      message =>
+        channel.custom.responseEmitter.emit(
+          message.properties.correlationId,
+          message.content,
+        ),
+      { noAck: true },
+    );
+
+    // Create event emmiter
+    const responseEmitter = new EventEmitter();
+    responseEmitter.setMaxListeners(0);
+
+    // Attach it to channel object to be used in task handler
+    channel.custom = {
+      responseEmitter,
+      replyQueue: queue,
+    };
+
+    return { channel, connection };
+  });
 }
 
 /**
@@ -80,12 +83,14 @@ export function publish({ channel, queue, data }) {
 export function register({ channel, type }) {
   return new Promise((resolve, reject) => {
     console.log('Registering');
-    request({ channel, queue: 'REGISTRATION_QUEUE', data: type }).then(
-      result => {
-        console.log('Registered');
-        resolve(result);
-      },
-    );
+    request({
+      channel,
+      queue: 'REGISTRATION_QUEUE',
+      data: { type, info: getInfo() },
+    }).then(result => {
+      console.log('Registered');
+      resolve(result);
+    });
   });
 }
 
@@ -107,12 +112,12 @@ export function reply({ channel, message, data }) {
 /**
  * Consumes queue and returns message
  */
-export function consume({ channel, queue, durable }, onMessage) {
+export function consume({ channel, queue, durable }, onSuccess) {
   // Check if queue exists or ccreate it
   channel.assertQueue(queue, { durable }).then(() => {
     console.log('[...] Consuming queue: ', queue);
     channel.consume(queue, message =>
-      onMessage({ message, data: toObject(message.content) }),
+      onSuccess({ message, data: toObject(message.content) }),
     );
   });
 }
@@ -120,7 +125,6 @@ export function consume({ channel, queue, durable }, onMessage) {
 /**
  * Remote procedure call function
  * Consumes queue and uppon message recieved calls supplied function
- * This function must be a promise which resolves with data
  * Then replies to request sender
  */
 export async function rpc(args, task) {

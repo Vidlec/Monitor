@@ -1,0 +1,6 @@
+{
+  "rabbitMQ": "amqp://localhost",
+  "type": "restGw",
+  "name": "testGw",
+  "port": 3000
+}

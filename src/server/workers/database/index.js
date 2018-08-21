@@ -6,12 +6,11 @@ import createDbHandler from './dbHandler';
 
 const rabbitConfig = {
   host: 'amqp://localhost',
-  replyQueue: 'DATABASE_WORKER_REPLY_QUEUE',
 };
 
 async function init() {
   // Connect to mq
-  const channel = await rabbit(rabbitConfig);
+  const { channel } = await rabbit(rabbitConfig);
   // Register with main server
   const dbType = await register({ channel, type: types.database });
 

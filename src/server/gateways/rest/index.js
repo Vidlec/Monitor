@@ -1,7 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
-import { rabbit, register } from '@utils';
+import registrationTypes from '@const/registrationTypes';
+import { rabbit, register, getConfig, getPort } from '@utils';
 
 import restRouter from './routes';
 
@@ -18,13 +19,15 @@ function getConnectionData(req) {
 
 const rabbitConfig = {
   host: 'amqp://localhost',
-  replyQueue: 'REST_GW_REPLY_QUEUE',
 };
 
 async function init() {
   // Connect to mq and register with main server
-  const channel = await rabbit(rabbitConfig);
-  await register({ channel, type: 'rules' });
+  const { channel } = await rabbit(rabbitConfig);
+  await register({ channel, type: registrationTypes.gateway });
+  const config = await getConfig(
+    `${process.cwd()}/config/server/config.gateway.json`,
+  );
 
   // Create REST server
   const app = express();
@@ -40,7 +43,8 @@ async function init() {
   app.use('/api', restRouter);
 
   // Gracefuly start the server
-  app.listen(3000, () => console.log('Example app listening on port 3000!'));
+  const { port, message } = await getPort(config.port);
+  app.listen(port, () => console.log(message));
 }
 
 init();

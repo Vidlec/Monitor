@@ -1,14 +1,10 @@
 import { readFile } from 'fs';
 
-export default function getConfig() {
+export default function getConfig(path) {
   return new Promise((resolve, reject) => {
-    readFile(
-      `${process.cwd()}/config/server/config.json`,
-      'utf8',
-      (err, file) => {
-        if (err) reject(err);
-        resolve(JSON.parse(file));
-      },
-    );
+    readFile(path, 'utf8', (err, file) => {
+      if (err) reject(err);
+      resolve(JSON.parse(file));
+    });
   });
 }
