@@ -1,6 +1,7 @@
 import 'babel-polyfill';
 
-import { getRules, getConfig, rabbit, rpc } from '@utils';
+import { getRules, getConfig, rabbit, rpc, broadcast } from '@utils';
+import { rulesUpdateExchange } from '@const/exchangesNames';
 import handleOnRegistration from './handleOnRegistration';
 
 async function init() {
@@ -24,6 +25,10 @@ async function init() {
     { channel, queue: 'REGISTRATION_QUEUE', durable: false },
     ({ content: data }) => handleOnRegistration({ data, config, rules }),
   );
+
+  setInterval(() => {
+    broadcast({ channel, exchange: rulesUpdateExchange, data: rules });
+  }, 4000);
 }
 
 init();

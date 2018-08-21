@@ -112,11 +112,18 @@ export function reply({ channel, message, data }) {
 /**
  * Consumes queue and returns message
  */
-export function consume({ channel, queue, durable }, onSuccess) {
+export function consume(
+  { channel, queue, durable = false, autoDelete = false, binding = {} },
+  onSuccess,
+) {
   // Check if queue exists or ccreate it
-  channel.assertQueue(queue, { durable }).then(() => {
-    console.log('[...] Consuming queue: ', queue);
-    channel.consume(queue, message =>
+  channel.assertQueue(queue, { durable }).then(({ queue: queueName }) => {
+    console.log('[...] Consuming queue: ', queueName);
+
+    const { bindTo } = binding;
+
+    if (bindTo) channel.bindQueue(queueName, bindTo, '');
+    channel.consume(queueName, message =>
       onSuccess({ message, data: toObject(message.content) }),
     );
   });
@@ -127,11 +134,33 @@ export function consume({ channel, queue, durable }, onSuccess) {
  * Consumes queue and uppon message recieved calls supplied function
  * Then replies to request sender
  */
-export async function rpc(args, task) {
+export function rpc(args, task) {
   const { channel } = args;
 
   consume(args, async ({ message, data }) => {
     const result = await task({ content: data });
     reply({ channel, message, data: result });
   });
+}
+
+/**
+ * Creates fanout type exchange
+ * Publishes message to all queues binded to that exchange
+ */
+export async function broadcast({ channel, exchange, data, durable = false }) {
+  channel.assertExchange(exchange, 'fanout', { durable });
+  channel.publish(exchange, '', toBuffer(data));
+}
+
+/**
+ * Subscribes to specific exchange
+ * Binds anonymous queue to it and consumes all messages
+ */
+export function subscribe({ channel, exchange, durable = false }, onSuccess) {
+  channel.assertExchange(exchange, 'fanout', { durable });
+
+  const binding = {
+    bindTo: exchange,
+  };
+  consume({ channel, queue: '', binding, autoDelete: true }, onSuccess);
 }

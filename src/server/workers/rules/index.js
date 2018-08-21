@@ -1,5 +1,6 @@
 import { rulesTasksQueue } from '@const/queueNames';
-import { rabbit, register, rpc } from '@utils';
+import { rulesUpdateExchange } from '@const/exchangesNames';
+import { rabbit, register, rpc, subscribe } from '@utils';
 import types from '@const/registrationTypes';
 
 import { handleRuleTask, handleRulesUpdate } from './mq/tasksHandlers';
@@ -22,6 +23,10 @@ async function init() {
   channel.prefetch(10);
   rpc({ channel, queue: rulesTasksQueue, durable: false }, ({ content }) =>
     handleRuleTask({ content, rulesStore }),
+  );
+
+  subscribe({ channel, exchange: rulesUpdateExchange }, ({ data }) =>
+    console.log(data),
   );
 }
 
