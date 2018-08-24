@@ -46,7 +46,7 @@ module.exports = {
   cache: true,
   mode: environment.TYPE,
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.ts', '.js', '.jsx'],
     alias: {
       '@const': path.resolve(CWD, `${config.JS_SRC}/const`),
       '@components': path.resolve(CWD, `${config.JS_SRC}/components`),
@@ -67,8 +67,30 @@ module.exports = {
             loader: 'babel-loader',
             options: {
               cacheDirectory: true,
-              plugins: ['syntax-dynamic-import'],
             },
+          },
+          {
+            loader: 'eslint-loader',
+            options: {
+              failOnError: !environment.DEVELOPMENT,
+              cache: false,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        include: path.resolve(CWD, config.JS_SRC),
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              cacheDirectory: true,
+            },
+          },
+          {
+            loader: 'awesome-typescript-loader',
           },
           {
             loader: 'eslint-loader',
