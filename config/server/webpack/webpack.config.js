@@ -22,7 +22,7 @@ module.exports = {
     libraryTarget: 'commonjs',
   },
   resolve: {
-    extensions: ['.js'],
+    extensions: ['.ts', '.js'],
     alias: {
       '@services': path.resolve(CWD, `${config.SRC}/services`),
       '@models': path.resolve(CWD, `${config.SRC}/models`),
@@ -45,6 +45,30 @@ module.exports = {
               cacheDirectory: true,
               plugins: ['syntax-dynamic-import', 'transform-decorators-legacy'],
             },
+          },
+          {
+            loader: 'eslint-loader',
+            options: {
+              failOnError: !config.DEVELOPMENT,
+              cache: false,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.ts?$/,
+        include: [path.resolve(CWD, config.SRC)],
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              cacheDirectory: true,
+              plugins: ['syntax-dynamic-import', 'transform-decorators-legacy'],
+            },
+          },
+          {
+            loader: 'awesome-typescript-loader',
           },
           {
             loader: 'eslint-loader',

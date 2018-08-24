@@ -1,0 +1,16 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "module": "es6",
+    "target": "es6",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "lib": ["dom", "es2017", "esnext.asynciterable"],
+    "allowJs": true,
+    "baseUrl": "./",
+    "paths": {
+      "@utils": ["src/server/utils"]
+    }
+  },
+  "exclude": ["node_modules/**/*"]
+}
